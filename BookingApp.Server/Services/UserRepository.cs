@@ -20,7 +20,7 @@ namespace BookingApp.Server.Services
             _connectionString = connectionString;
         }
 
-        public async Task<int> AddUserAsync(User user)
+        public async Task<int> AddAsync(User user)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
@@ -47,7 +47,7 @@ namespace BookingApp.Server.Services
             }
         }
 
-        public async Task<bool> DeleteUserAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
@@ -57,7 +57,7 @@ namespace BookingApp.Server.Services
             }
         }
 
-        public async Task<bool> UpdateUserAsync(User user)
+        public async Task<bool> UpdateAsync(User user)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
@@ -93,7 +93,7 @@ namespace BookingApp.Server.Services
             }
         }
 
-        public async Task<(IEnumerable<User> Users, int TotalRecords)> GetUsersAsync(string? keyword, int pageNumber, int pageSize)
+        public async Task<(IEnumerable<User> Users, int TotalRecords)> GetAsync(string? keyword, int pageNumber, int pageSize)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
@@ -128,7 +128,7 @@ namespace BookingApp.Server.Services
             }
         }
 
-        public async Task<User?> GetUserByIdAsync(int id)
+        public async Task<User?> GetByIdAsync(int id)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
@@ -141,7 +141,7 @@ namespace BookingApp.Server.Services
             }
         }
 
-        public async Task<User?> GetUserByUsernameAsync(string username)
+        public async Task<User?> GetByUsernameAsync(string username)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {

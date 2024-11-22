@@ -65,7 +65,7 @@ namespace BookingApp.Server.Controllers
         }
 
         [HttpGet("Product/Search")]
-        public async Task<IActionResult> GetProducts(
+        public async Task<IActionResult> Search(
                     [FromQuery] string? keyword = null,
                     [FromQuery] int pageNumber = 1,
                     [FromQuery] int pageSize = 20)

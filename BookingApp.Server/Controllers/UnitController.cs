@@ -6,31 +6,27 @@ using System.Diagnostics.Eventing.Reader;
 
 namespace BookingApp.Server.Controllers
 {
-    public class UserController : ControllerBase
+    public class UnitController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly UnitService _unitService;
 
-        public UserController(IConfiguration configuration)
+        public UnitController(IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("DatabaseConfig");
-            _userService = new UserService(connectionString);
+            _unitService = new UnitService(connectionString);
         }
 
 
-        [HttpPost("User/Create")]
-        public async Task<IActionResult> CreateUser([FromBody] User? user)
+        [HttpPost("Unit/Create")]
+        public async Task<IActionResult> CreateUser([FromBody] Unit? unit)
         {
             try
             {
-                if (user == null)
+                if (unit == null)
                     return BadRequest();
 
-                var result = await _userService.GetByUsernameAsync(user.username);
-                if(result != null) 
-                    return BadRequest("Username is already exit.");
-
-                var id = await _userService.AddAsync(user);
-                return CreatedAtAction(nameof(GetUserById), new { id }, user);
+                var id = await _unitService.AddAsync(unit);
+                return CreatedAtAction(nameof(GetUserById), new { id }, unit);
             }
             catch (Exception e)
             {
@@ -39,12 +35,12 @@ namespace BookingApp.Server.Controllers
 
         }
 
-        [HttpDelete("User/Delete")]
+        [HttpDelete("Unit/Delete")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             try
             {
-                var success = await _userService.DeleteAsync(id);
+                var success = await _unitService.DeleteAsync(id);
                 return success ? StatusCode(200, "success") : NotFound();
             }
             catch (Exception e)
@@ -54,15 +50,15 @@ namespace BookingApp.Server.Controllers
 
         }
 
-        [HttpPut("User/Update")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] User? user)
+        [HttpPut("Unit/Update")]
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] Unit? unit)
         {
             try
             {
-                if (id != user.id)
+                if (id != unit.id)
                     return BadRequest();
 
-                var success = await _userService.UpdateAsync(user);
+                var success = await _unitService.UpdateAsync(unit);
                 return success ? StatusCode(200, "success") : NotFound();
             }
             catch (Exception e)
@@ -72,7 +68,7 @@ namespace BookingApp.Server.Controllers
 
         }
 
-        [HttpGet("User/Search")]
+        [HttpGet("Unit/Search")]
         public async Task<IActionResult> Search(
                     [FromQuery] string? keyword = null,
                     [FromQuery] int pageNumber = 1,
@@ -81,10 +77,10 @@ namespace BookingApp.Server.Controllers
             if (pageNumber < 1 || pageSize < 1)
                 return BadRequest("Invalid pagination parameters.");
 
-            var result = await _userService.GetAsync(keyword, pageNumber, pageSize);
+            var result = await _unitService.GetAsync(keyword, pageNumber, pageSize);
             var response = new
             {
-                Data = result.Users,
+                Data = result.Units,
                 TotalRecords = result.TotalRecords,
                 CurrentPage = pageNumber,
                 TotalPages = (int)Math.Ceiling(result.TotalRecords / (double)pageSize)
@@ -93,13 +89,13 @@ namespace BookingApp.Server.Controllers
             return Ok(response);
         }
 
-        [HttpGet("User/GetById")]
+        [HttpGet("Unit/GetById")]
         public async Task<IActionResult> GetUserById(int id)
         {
-            var user = await _userService.GetByIdAsync(id);
+            var user = await _unitService.GetByIdAsync(id);
 
             if (user == null)
-                return NotFound($"User with ID {id} not found.");
+                return NotFound($"Unit with ID {id} not found.");
 
             return Ok(user);
         }

@@ -11,20 +11,20 @@ namespace BookingApp.Server.Services
             _repository = new UserRepository(connectionString);
         }
 
-        public Task<int> AddUserAsync(User user) => _repository.AddUserAsync(user);
-        public Task<bool> DeleteUserAsync(int id) => _repository.DeleteUserAsync(id);
-        public Task<bool> UpdateUserAsync(User user) => _repository.UpdateUserAsync(user);
-        public async Task<(IEnumerable<User> Users, int TotalRecords)> GetUsersAsync(string? keyword, int pageNumber, int pageSize)
+        public Task<int> AddAsync(User user) => _repository.AddAsync(user);
+        public Task<bool> DeleteAsync(int id) => _repository.DeleteAsync(id);
+        public Task<bool> UpdateAsync(User user) => _repository.UpdateAsync(user);
+        public async Task<(IEnumerable<User> Users, int TotalRecords)> GetAsync(string? keyword, int pageNumber, int pageSize)
         {
-            return await _repository.GetUsersAsync(keyword, pageNumber, pageSize);
+            return await _repository.GetAsync(keyword, pageNumber, pageSize);
         }
-        public async Task<User?> GetUserByIdAsync(int id)
+        public async Task<User?> GetByIdAsync(int id)
         {
-            return await _repository.GetUserByIdAsync(id);
+            return await _repository.GetByIdAsync(id);
         }
-        public async Task<User?> GetUserByUsernameAsync(string username)
+        public async Task<User?> GetByUsernameAsync(string username)
         {
-            return await _repository.GetUserByUsernameAsync(username);
+            return await _repository.GetByUsernameAsync(username);
         }
         public Task<bool> ChangePasswordAsync(User user) => _repository.ChangePasswordAsync(user);
         public async Task<User?> LoginAsync(string username , string password )
