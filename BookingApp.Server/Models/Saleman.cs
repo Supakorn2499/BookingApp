@@ -18,7 +18,7 @@
         public string login { get; set; }
         public decimal? commission { get; set; }
         public string signature { get; set; }
-        public int status { get; set; }
+        public int status { get; set; } = 0;
         public string active { get; set; }
         public DateTime? inactivedate { get; set; }
         public string createby { get; set; }
@@ -26,8 +26,8 @@
         public string updateby { get; set; }
         public DateTime? updateatutc { get; set; }
         public string createapp { get; set; }
-        public int sale_team_id { get; set; }
-        public int sale_area_id { get; set; }
+        public int? sale_team_id { get; set; }
+        public int? sale_area_id { get; set; }
         public string nick_name { get; set; }
         public DateTime? start_work_date { get; set; }
     }

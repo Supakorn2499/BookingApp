@@ -21,10 +21,10 @@ namespace BookingApp.Server.Services
                 const string query = @"
                 INSERT INTO saleman (companyid,code,card_no ,prefix_th ,
                 prefix_en ,nick_name , name1,name2, tel,mobile,email,commission,sale_team_id ,
-                start_work_date ,active,inactivedate,createby, createatutc) 
+                start_work_date,status,active,inactivedate,createby, createatutc) 
                 VALUES (@companyid,@code,@card_no ,@prefix_th ,@prefix_en ,@nick_name , 
-                @name1,@name2, @tel,@mobile,@email,@commission,@sale_team_id ,@start_work_date 
-                ,@active,@inactivedate,@createby, @createatutc)
+                @name1,@name2, @tel,@mobile,@email,@commission,@sale_team_id ,@start_work_date, 
+                @status,@active,@inactivedate,@createby, @createatutc)
                 RETURNING id;";
 
                 if (saleman.active == "Y")
@@ -33,7 +33,7 @@ namespace BookingApp.Server.Services
                 }
                 if(saleman.start_work_date != null)
                 {
-                    saleman.start_work_date = DateTimeHelper.ConvertToUtc(DateTime.Now);
+                    saleman.start_work_date = DateTimeHelper.ConvertToUtc(saleman.start_work_date);
                 }
                 var paraments = new
                 {
@@ -50,8 +50,10 @@ namespace BookingApp.Server.Services
                     email = saleman.email,
                     commission = saleman.commission,
                     sale_team_id = saleman.sale_team_id,
+                    status = saleman.status,
                     active = saleman.active,
                     inactivedate = saleman.inactivedate,
+                    start_work_date = saleman.start_work_date,
                     createby = saleman.createby,
                     createatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)
                 };
@@ -77,28 +79,32 @@ namespace BookingApp.Server.Services
                 const string query = @"
                 UPDATE saleman 
                 SET 
-                    companyid = @companyid,
-                    code = @code,
-                    card_no = @card_no,
-                    prefix_th =@prefix_th,
-                    prefix_en =@prefix_en,
-                    nick_name =@nick_name ,
-                    name1 = @name1,
-                    name2 = @name2,
-                    tel = @tel,
-                    mobile = @mobile,
-                    email = @email,
-                    commission = @commission,
-                    sale_team_id = @sale_team_id ,
-                    start_work_date =@start_work_date ,
-                    active = @active,
-                    inactivedate = @inactivedate
+                    companyid=@companyid,
+                    code=@code,
+                    card_no=@card_no,
+                    prefix_th=@prefix_th,
+                    prefix_en=@prefix_en,
+                    nick_name=@nick_name ,
+                    name1=@name1,
+                    name2=@name2,
+                    tel=@tel,
+                    mobile=@mobile,
+                    email=@email,
+                    commission=@commission,
+                    sale_team_id=@sale_team_id ,
+                    start_work_date=@start_work_date ,
+                    active=@active,
+                    inactivedate=@inactivedate,
                     updateby=@updateby, 
                     updateatutc=@updateatutc
                 WHERE id = @id;";
                 if (saleman.active == "Y")
                 {
                     saleman.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
+                }
+                if (saleman.start_work_date != null)
+                {
+                    saleman.start_work_date = DateTimeHelper.ConvertToUtc(saleman.start_work_date);
                 }
                 var paraments = new
                 {
@@ -118,6 +124,7 @@ namespace BookingApp.Server.Services
                     sale_team_id = saleman.sale_team_id,
                     active = saleman.active,
                     inactivedate = saleman.inactivedate,
+                    start_work_date = saleman.start_work_date,
                     updateby = saleman.updateby,
                     updateatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)
                 };
