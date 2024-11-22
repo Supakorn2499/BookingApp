@@ -7,37 +7,37 @@ using Dapper;
 
 namespace BookingApp.Server.Services
 {
-    public class UnitRepository
+    public class SaleTeamRepository
     {
         private readonly string _connectionString;
 
-        public UnitRepository(string connectionString)
+        public SaleTeamRepository(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        public async Task<int> AddAsync(Unit unit)
+        public async Task<int> AddAsync(SaleTeam saleTeam)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
-                INSERT INTO um (companyid,code, name1,name2, active,inactivedate,createby, createatutc) 
+                INSERT INTO saleteam (companyid,code, name1,name2, active,inactivedate,createby, createatutc) 
                 VALUES (@companyid,@code, @name1,@name2, @active,@inactivedate,@createby, @createatutc)
                 RETURNING id;";
 
-                if (unit.active == "Y")
+                if (saleTeam.active == "Y")
                 {
-                    unit.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
+                    saleTeam.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
                 }
                 var paraments = new
                 {
-                    companyid = unit.companyid,
-                    code= unit.code,
-                    name1 = unit.name1,
-                    name2 = unit.name2,
-                    active = unit.active,
-                    inactivedate = unit.inactivedate,
-                    createby = unit.createby,
+                    companyid = saleTeam.companyid,
+                    code = saleTeam.code,
+                    name1 = saleTeam.name1,
+                    name2 = saleTeam.name2,
+                    active = saleTeam.active,
+                    inactivedate = saleTeam.inactivedate,
+                    createby = saleTeam.createby,
                     createatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)
                 };
 
@@ -49,18 +49,18 @@ namespace BookingApp.Server.Services
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
-                const string query = "DELETE FROM um WHERE id = @id;";
+                const string query = "DELETE FROM saleteam WHERE id = @id;";
                 var rowsAffected = await connection.ExecuteAsync(query, new { id });
                 return rowsAffected > 0;
             }
         }
 
-        public async Task<bool> UpdateAsync(Unit unit)
+        public async Task<bool> UpdateAsync(SaleTeam saleTeam)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
-                UPDATE um 
+                UPDATE saleteam 
                 SET 
                     companyid = @companyid,
                     code= @code,
@@ -71,20 +71,20 @@ namespace BookingApp.Server.Services
                     updateby=@updateby, 
                     updateatutc=@updateatutc
                 WHERE id = @id;";
-                if(unit.active == "Y")
+                if (saleTeam.active == "Y")
                 {
-                    unit.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
+                    saleTeam.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
                 }
                 var paraments = new
                 {
-                    id = unit.id,
-                    companyid = unit.companyid,
-                    code = unit.code,
-                    name1 = unit.name1,
-                    name2 = unit.name2,
-                    active = unit.active,
-                    inactivedate = unit.inactivedate,
-                    updateby = unit.updateby,
+                    id = saleTeam.id,   
+                    companyid = saleTeam.companyid,
+                    code = saleTeam.code,
+                    name1 = saleTeam.name1,
+                    name2 = saleTeam.name2,
+                    active = saleTeam.active,
+                    inactivedate = saleTeam.inactivedate,
+                    updateby = saleTeam.updateby,
                     updateatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)
                 };
 
@@ -93,13 +93,13 @@ namespace BookingApp.Server.Services
             }
         }
 
-        public async Task<(IEnumerable<Unit> Units, int TotalRecords)> GetAsync(string? keyword, int pageNumber, int pageSize)
+        public async Task<(IEnumerable<SaleTeam> SaleTeams, int TotalRecords)> GetAsync(string? keyword, int pageNumber, int pageSize)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
             SELECT * 
-            FROM um
+            FROM saleteam
             WHERE (@Keyword IS NULL OR 
                    LOWER(name1) LIKE LOWER(@Keyword) OR 
                    LOWER(name2) LIKE LOWER(@Keyword) OR 
@@ -108,7 +108,7 @@ namespace BookingApp.Server.Services
             OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
 
             SELECT COUNT(*)
-            FROM um
+            FROM saleteam
             WHERE (@Keyword IS NULL OR 
                    LOWER(name1) LIKE LOWER(@Keyword) OR 
                    LOWER(name2) LIKE LOWER(@Keyword) OR 
@@ -123,23 +123,23 @@ namespace BookingApp.Server.Services
                     PageSize = pageSize
                 }))
                 {
-                    var units = await multi.ReadAsync<Unit>();
+                    var saleteams = await multi.ReadAsync<SaleTeam>();
                     var totalRecords = await multi.ReadFirstAsync<int>();
-                    return (units, totalRecords);
+                    return (saleteams, totalRecords);
                 }
             }
         }
 
-        public async Task<Unit?> GetByIdAsync(int id)
+        public async Task<SaleTeam?> GetByIdAsync(int id)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
             SELECT * 
-            FROM um
+            FROM saleteam
             WHERE id = @id;";
 
-                return await connection.QueryFirstOrDefaultAsync<Unit>(query, new { id = id });
+                return await connection.QueryFirstOrDefaultAsync<SaleTeam>(query, new { id = id });
             }
         }
 

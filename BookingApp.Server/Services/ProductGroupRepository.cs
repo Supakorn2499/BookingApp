@@ -4,40 +4,39 @@ using Npgsql;
 using System.ComponentModel.Design;
 using System;
 using Dapper;
-
 namespace BookingApp.Server.Services
 {
-    public class UnitRepository
+    public class ProductGroupRepository
     {
         private readonly string _connectionString;
 
-        public UnitRepository(string connectionString)
+        public ProductGroupRepository(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        public async Task<int> AddAsync(Unit unit)
+        public async Task<int> AddAsync(ProductGroup productGroup)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
-                INSERT INTO um (companyid,code, name1,name2, active,inactivedate,createby, createatutc) 
-                VALUES (@companyid,@code, @name1,@name2, @active,@inactivedate,@createby, @createatutc)
+                INSERT INTO productgroup (companyid,code, name1,name2,active,inactivedate,createby, createatutc) 
+                VALUES (@companyid,@code, @name1,@name2,@active,@inactivedate,@createby, @createatutc)
                 RETURNING id;";
 
-                if (unit.active == "Y")
+                if (productGroup.active == "Y")
                 {
-                    unit.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
+                    productGroup.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
                 }
                 var paraments = new
                 {
-                    companyid = unit.companyid,
-                    code= unit.code,
-                    name1 = unit.name1,
-                    name2 = unit.name2,
-                    active = unit.active,
-                    inactivedate = unit.inactivedate,
-                    createby = unit.createby,
+                    companyid= productGroup.companyid,
+                    code = productGroup.code,
+                    name1 = productGroup.name1,
+                    name2 = productGroup.name2,
+                    active = productGroup.active,
+                    inactivedate = productGroup.inactivedate,
+                    createby = productGroup.createby,
                     createatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)
                 };
 
@@ -49,21 +48,21 @@ namespace BookingApp.Server.Services
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
-                const string query = "DELETE FROM um WHERE id = @id;";
+                const string query = "DELETE FROM productgroup WHERE id = @id;";
                 var rowsAffected = await connection.ExecuteAsync(query, new { id });
                 return rowsAffected > 0;
             }
         }
 
-        public async Task<bool> UpdateAsync(Unit unit)
+        public async Task<bool> UpdateAsync(ProductGroup productGroup)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
-                UPDATE um 
+                UPDATE productgroup 
                 SET 
                     companyid = @companyid,
-                    code= @code,
+                    code = @code, 
                     name1 = @name1,
                     name2 = @name2,
                     active = @active,
@@ -71,20 +70,20 @@ namespace BookingApp.Server.Services
                     updateby=@updateby, 
                     updateatutc=@updateatutc
                 WHERE id = @id;";
-                if(unit.active == "Y")
+                if (productGroup.active == "Y")
                 {
-                    unit.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
+                    productGroup.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
                 }
                 var paraments = new
                 {
-                    id = unit.id,
-                    companyid = unit.companyid,
-                    code = unit.code,
-                    name1 = unit.name1,
-                    name2 = unit.name2,
-                    active = unit.active,
-                    inactivedate = unit.inactivedate,
-                    updateby = unit.updateby,
+                    id = productGroup.id,
+                    companyid = productGroup.companyid,
+                    code = productGroup.code,
+                    name1 = productGroup.name1,
+                    name2 = productGroup.name2,
+                    active = productGroup.active,
+                    inactivedate = productGroup.inactivedate,
+                    updateby = productGroup.updateby,
                     updateatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)
                 };
 
@@ -93,13 +92,13 @@ namespace BookingApp.Server.Services
             }
         }
 
-        public async Task<(IEnumerable<Unit> Units, int TotalRecords)> GetAsync(string? keyword, int pageNumber, int pageSize)
+        public async Task<(IEnumerable<ProductGroup> productGroups, int TotalRecords)> GetAsync(string? keyword, int pageNumber, int pageSize)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
             SELECT * 
-            FROM um
+            FROM productgroup
             WHERE (@Keyword IS NULL OR 
                    LOWER(name1) LIKE LOWER(@Keyword) OR 
                    LOWER(name2) LIKE LOWER(@Keyword) OR 
@@ -108,7 +107,7 @@ namespace BookingApp.Server.Services
             OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
 
             SELECT COUNT(*)
-            FROM um
+            FROM productgroup
             WHERE (@Keyword IS NULL OR 
                    LOWER(name1) LIKE LOWER(@Keyword) OR 
                    LOWER(name2) LIKE LOWER(@Keyword) OR 
@@ -123,23 +122,23 @@ namespace BookingApp.Server.Services
                     PageSize = pageSize
                 }))
                 {
-                    var units = await multi.ReadAsync<Unit>();
+                    var ProductGroups = await multi.ReadAsync<ProductGroup>();
                     var totalRecords = await multi.ReadFirstAsync<int>();
-                    return (units, totalRecords);
+                    return (ProductGroups, totalRecords);
                 }
             }
         }
 
-        public async Task<Unit?> GetByIdAsync(int id)
+        public async Task<ProductGroup?> GetByIdAsync(int id)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
             SELECT * 
-            FROM um
+            FROM productgroup
             WHERE id = @id;";
 
-                return await connection.QueryFirstOrDefaultAsync<Unit>(query, new { id = id });
+                return await connection.QueryFirstOrDefaultAsync<ProductGroup>(query, new { id = id });
             }
         }
 
