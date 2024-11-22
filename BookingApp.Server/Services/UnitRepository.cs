@@ -31,6 +31,7 @@ namespace BookingApp.Server.Services
                 }
                 var paraments = new
                 {
+                    id = unit.id,
                     companyid = unit.companyid,
                     code= unit.code,
                     name1 = unit.name1,

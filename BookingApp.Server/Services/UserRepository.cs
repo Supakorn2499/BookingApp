@@ -77,6 +77,7 @@ namespace BookingApp.Server.Services
 
                 var paraments = new
                 {
+                    id = user.id,
                     username = user.username,
                     firstname = user.firstname,
                     lastname = user.lastname,
@@ -169,6 +170,7 @@ namespace BookingApp.Server.Services
 
                 var paraments = new
                 {
+                    id = user.id,
                     username = user.username,
                     password = HasPassword.Sha1(user.password),
                     updateby = user.updateby,

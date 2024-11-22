@@ -81,7 +81,7 @@ namespace BookingApp.Server.Services
                 }
                 var paraments = new
                 {
-
+                    id = paytype.id,
                     code = paytype.code,
                     name1 = paytype.name1,
                     name2 = paytype.name2,

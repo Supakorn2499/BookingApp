@@ -7,38 +7,37 @@ using Dapper;
 
 namespace BookingApp.Server.Services
 {
-    public class VattypeRepository
+    public class ProductTypeRepository
     {
         private readonly string _connectionString;
 
-        public VattypeRepository(string connectionString)
+        public ProductTypeRepository(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        public async Task<int> AddAsync(Vattype vattype)
+        public async Task<int> AddAsync(ProductType productType)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
-                INSERT INTO vattype (code, name1,name2,rate,vat_type, active,inactivedate,createby, createatutc) 
-                VALUES (@code, @name1,@name2,@rate,@vat_type, @active,@inactivedate,@createby, @createatutc)
+                INSERT INTO prodtype (code, name1,name2,active,inactivedate,flag,createby, createatutc) 
+                VALUES (@code, @name1,@name2,@active,@inactivedate,@flag,@createby, @createatutc)
                 RETURNING id;";
 
-                if (vattype.active == "Y")
+                if (productType.active == "Y")
                 {
-                   vattype.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
+                    productType.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
                 }
                 var paraments = new
                 {
-                    code = vattype.code,
-                    name1 = vattype.name1,
-                    name2 = vattype.name2,
-                    rate = vattype.rate,
-                    vat_type = vattype.vat_type,
-                    active = vattype.active,
-                    inactivedate = vattype.inactivedate,
-                    createby = vattype.createby,
+                    code = productType.code,
+                    name1 = productType.name1,
+                    name2 = productType.name2,
+                    flag = productType.flag,
+                    active = productType.active,
+                    inactivedate = productType.inactivedate,
+                    createby = productType.createby,
                     createatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)
                 };
 
@@ -50,44 +49,42 @@ namespace BookingApp.Server.Services
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
-                const string query = "DELETE FROM vattype WHERE id = @id;";
+                const string query = "DELETE FROM prodtype WHERE id = @id;";
                 var rowsAffected = await connection.ExecuteAsync(query, new { id });
                 return rowsAffected > 0;
             }
         }
 
-        public async Task<bool> UpdateAsync(Vattype vattype)
+        public async Task<bool> UpdateAsync(ProductType productType)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
-                UPDATE vattype 
+                UPDATE prodtype 
                 SET 
-                    code= @code,
+                    code = @code, 
                     name1 = @name1,
                     name2 = @name2,
-                    rate = @rate,
-                    vat_type = @vat_type,
+                    flag = @flag,
                     active = @active,
                     inactivedate = @inactivedate,
                     updateby=@updateby, 
                     updateatutc=@updateatutc
                 WHERE id = @id;";
-                if (vattype.active == "Y")
+                if (productType.active == "Y")
                 {
-                    vattype.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
+                    productType.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
                 }
                 var paraments = new
                 {
-                    id = vattype.id,
-                    code = vattype.code,
-                    name1 = vattype.name1,
-                    name2 = vattype.name2,
-                    active = vattype.active,
-                    rate = vattype.rate,
-                    vat_type = vattype.vat_type,
-                    inactivedate = vattype.inactivedate,
-                    updateby = vattype.updateby,
+                    id = productType.id,
+                    code = productType.code,
+                    name1 = productType.name1,
+                    name2 = productType.name2,
+                    flag = productType.flag,
+                    active = productType.active,
+                    inactivedate = productType.inactivedate,
+                    updateby = productType.updateby,
                     updateatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)
                 };
 
@@ -96,13 +93,13 @@ namespace BookingApp.Server.Services
             }
         }
 
-        public async Task<(IEnumerable<Vattype> Vattype, int TotalRecords)> GetAsync(string? keyword, int pageNumber, int pageSize)
+        public async Task<(IEnumerable<ProductType> ProductType, int TotalRecords)> GetAsync(string? keyword, int pageNumber, int pageSize)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
             SELECT * 
-            FROM vattype
+            FROM prodtype
             WHERE (@Keyword IS NULL OR 
                    LOWER(name1) LIKE LOWER(@Keyword) OR 
                    LOWER(name2) LIKE LOWER(@Keyword) OR 
@@ -111,7 +108,7 @@ namespace BookingApp.Server.Services
             OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
 
             SELECT COUNT(*)
-            FROM vattype
+            FROM prodtype
             WHERE (@Keyword IS NULL OR 
                    LOWER(name1) LIKE LOWER(@Keyword) OR 
                    LOWER(name2) LIKE LOWER(@Keyword) OR 
@@ -126,23 +123,23 @@ namespace BookingApp.Server.Services
                     PageSize = pageSize
                 }))
                 {
-                    var vattype = await multi.ReadAsync<Vattype>();
+                    var ProductTypes = await multi.ReadAsync<ProductType>();
                     var totalRecords = await multi.ReadFirstAsync<int>();
-                    return (vattype, totalRecords);
+                    return (ProductTypes, totalRecords);
                 }
             }
         }
 
-        public async Task<Vattype?> GetByIdAsync(int id)
+        public async Task<ProductType?> GetByIdAsync(int id)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
             SELECT * 
-            FROM vattype
+            FROM prodtype
             WHERE id = @id;";
 
-                return await connection.QueryFirstOrDefaultAsync<Vattype>(query, new { id = id });
+                return await connection.QueryFirstOrDefaultAsync<ProductType>(query, new { id = id });
             }
         }
 
