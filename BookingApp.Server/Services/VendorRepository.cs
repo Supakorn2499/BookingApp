@@ -39,7 +39,7 @@ namespace BookingApp.Server.Services
                 creditamt, methodofpaymentcode, bookbankno, bookbankname, bankcode, bankbranch, billingcond,
                 creditdaysbilling, receivingdatecond, discountendbill, discountitem, currencycode, promotioncode,
                 vattype, vatisout, vatrate, remark1, remark2, remark3, remark4, remark5, remark6, remark7, remark8,
-                remark9, remark10, createby, createatutc, createapp, ivattype, lineid,
+                remark9, remark10, createby, createatutc, ivattype, lineid,
                 iwhttype, shippingid
             ) VALUES(
                 @companyid, @vendorgroupid, @acchartid, @bankid, @bankbranchid, @paytypeid,
@@ -53,9 +53,9 @@ namespace BookingApp.Server.Services
                 @creditamt, @methodofpaymentcode, @bookbankno, @bookbankname, @bankcode, @bankbranch, @billingcond,
                 @creditdaysbilling, @receivingdatecond, @discountendbill, @discountitem, @currencycode, @promotioncode,
                 @vattype, @vatisout, @vatrate, @remark1, @remark2, @remark3, @remark4, @remark5, @remark6, @remark7, @remark8,
-                @remark9, @remark10, @createby, @createatutc,@createapp, @ivattype, @lineid,
+                @remark9, @remark10, @createby, @createatutc, @ivattype, @lineid,
                 @iwhttype, @shippingid
-            ); SELECT CAST(SCOPE_IDENTITY() as int); ";
+            ) RETURNING id;";
 
                 if (vendor.active == "Y")
                 {
@@ -188,10 +188,12 @@ namespace BookingApp.Server.Services
                 text_report_branchcode = @text_report_branchcode, 
                 text_report_branchname = @text_report_branchname, 
                 code = @code,
-                vendortype = @vendortype, status = @status, 
+                vendortype = @vendortype, 
+                status = @status, 
                 active = @active, 
                 inactivedate = @inactivedate,
-                prename = @prename, firstname = @firstname, 
+                prename = @prename, 
+                firstname = @firstname, 
                 midname = @midname, 
                 lastname = @lastname,
                 firstname2 = @firstname2,
@@ -250,7 +252,7 @@ namespace BookingApp.Server.Services
                 ivattype = @ivattype, 
                 lineid = @lineid, 
                 iwhttype = @iwhttype, 
-                shippingid = @shippingid
+                shippingid = @shippingid 
                 WHERE id = @id;";
                 if (vendor.active == "Y")
                 {
