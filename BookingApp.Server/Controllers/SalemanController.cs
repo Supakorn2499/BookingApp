@@ -95,7 +95,7 @@ namespace BookingApp.Server.Controllers
             var user = await _salemanService.GetByIdAsync(id);
 
             if (user == null)
-                return NotFound($"Unit with ID {id} not found.");
+                return NotFound($"Saleman with ID {id} not found.");
 
             return Ok(user);
         }

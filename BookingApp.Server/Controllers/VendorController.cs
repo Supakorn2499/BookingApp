@@ -95,7 +95,7 @@ namespace BookingApp.Server.Controllers
             var user = await _vendorService.GetByIdAsync(id);
 
             if (user == null)
-                return NotFound($"Unit with ID {id} not found.");
+                return NotFound($"Vendor with ID {id} not found.");
 
             return Ok(user);
         }
