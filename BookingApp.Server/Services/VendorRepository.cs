@@ -248,7 +248,6 @@ namespace BookingApp.Server.Services
                 remark10 = @remark10,
                 updateby = @updateby, 
                 updateatutc = @updateatutc,
-                createapp = @createapp,
                 ivattype = @ivattype, 
                 lineid = @lineid, 
                 iwhttype = @iwhttype, 
@@ -346,6 +345,7 @@ namespace BookingApp.Server.Services
                     updateatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)
                 };
 
+                string sql = DapperHelper.DebugSql(query, paraments);
                 var rowsAffected = await connection.ExecuteAsync(query, paraments);
                 return rowsAffected > 0;
             }

@@ -30,9 +30,9 @@
         public string firstname { get; set; }
         public string midname { get; set; }
         public string lastname { get; set; }
-        public string firstname2 { get; set; }
-        public string midname2 { get; set; }
-        public string lastname2 { get; set; }
+        public string firstname2 { get; set; } = "";
+        public string midname2 { get; set; } = "";
+        public string lastname2 { get; set; } = "";
         public string name1 { get; set; }
         public string sname1 { get; set; }
         public string name2 { get; set; }
@@ -42,7 +42,7 @@
         public string headoffice { get; set; }
         public string branchcode { get; set; }
         public string branchname { get; set; }
-        public string branchname2 { get; set; }
+        public string branchname2 { get; set; } = "";
         public string teletax { get; set; }
         public string tel { get; set; }
         public string mobile { get; set; }
@@ -61,7 +61,7 @@
         public string bankcode { get; set; }
         public string bankbranch { get; set; }
         public string billingcond { get; set; }
-        public string creditdaysbilling { get; set; }
+        public string creditdaysbilling { get; set; } = "";
         public string receivingdatecond { get; set; }
         public string discountendbill { get; set; }
         public string discountitem { get; set; }
@@ -79,7 +79,7 @@
         public string remark7 { get; set; }
         public string remark8 { get; set; }
         public string remark9 { get; set; }
-        public string remark10 { get; set; }
+        public string remark10 { get; set; } = "";
         public string createby { get; set; }
         public DateTime? createatutc { get; set; }
         public string updateby { get; set; }

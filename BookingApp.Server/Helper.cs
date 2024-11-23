@@ -27,5 +27,21 @@ namespace BookingApp.Server
                 return BitConverter.ToString(shA1.ComputeHash(Encoding.UTF8.GetBytes(input))).Replace("-", "").ToLower();
         }
     }
-    
+
+    public static class DapperHelper
+    {
+        public static string DebugSql(string query, object parameters)
+        {
+            foreach (var prop in parameters.GetType().GetProperties())
+            {
+                var value = prop.GetValue(parameters);
+                var formattedValue = value is string || value is DateTime
+                    ? $"'{value}'"
+                    : value?.ToString() ?? "NULL";
+                query = query.Replace($"@{prop.Name}", formattedValue);
+            }
+            return query;
+        }
+    }
+   
 }
