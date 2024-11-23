@@ -31,7 +31,7 @@ namespace BookingApp.Server.Services
                 {
                     saleman.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
                 }
-                if(saleman.start_work_date != null)
+                if (saleman.start_work_date != null)
                 {
                     saleman.start_work_date = DateTimeHelper.ConvertToUtc(saleman.start_work_date);
                 }
@@ -42,7 +42,7 @@ namespace BookingApp.Server.Services
                     nick_name = saleman.nick_name,
                     name1 = saleman.name1,
                     card_no = saleman.card_no,
-                    prefix_th=saleman.prefix_th,
+                    prefix_th = saleman.prefix_th,
                     prefix_en = saleman.prefix_en,
                     name2 = saleman.name2,
                     tel = saleman.tel,

@@ -27,7 +27,7 @@ namespace BookingApp.Server.Services
 
                 if (vattype.active == "Y")
                 {
-                   vattype.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
+                    vattype.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
                 }
                 var paraments = new
                 {

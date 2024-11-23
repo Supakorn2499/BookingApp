@@ -345,7 +345,7 @@ namespace BookingApp.Server.Services
                     updateatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)
                 };
 
-                string sql = DapperHelper.DebugSql(query, paraments);
+                //string sql = DapperHelper.DebugSql(query, paraments);
                 var rowsAffected = await connection.ExecuteAsync(query, paraments);
                 return rowsAffected > 0;
             }

@@ -43,7 +43,7 @@ namespace BookingApp.Server.Services
                     name2 = product.name2,
                     stdprice = product.stdprice,
                     stdcost = product.stdcost,
-                    minprice= product.minprice,
+                    minprice = product.minprice,
                     remark1 = product.remark1,
                     createby = product.createby,
                     createatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)

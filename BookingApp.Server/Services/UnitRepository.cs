@@ -32,7 +32,7 @@ namespace BookingApp.Server.Services
                 var paraments = new
                 {
                     companyid = unit.companyid,
-                    code= unit.code,
+                    code = unit.code,
                     name1 = unit.name1,
                     name2 = unit.name2,
                     active = unit.active,
@@ -71,7 +71,7 @@ namespace BookingApp.Server.Services
                     updateby=@updateby, 
                     updateatutc=@updateatutc
                 WHERE id = @id;";
-                if(unit.active == "Y")
+                if (unit.active == "Y")
                 {
                     unit.inactivedate = DateTimeHelper.ConvertToUtc(DateTime.Now);
                 }
