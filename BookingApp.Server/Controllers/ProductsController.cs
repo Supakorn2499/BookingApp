@@ -24,11 +24,11 @@ namespace BookingApp.Server.Controllers
                 var id = await _productService.AddProductAsync(product);
                 return CreatedAtAction(nameof(GetProductById), new { id }, product);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return StatusCode(500, e.Message);
             }
-           
+
         }
 
         [HttpDelete("Product/Delete")]
@@ -39,7 +39,7 @@ namespace BookingApp.Server.Controllers
                 var success = await _productService.DeleteProductAsync(id);
                 return success ? StatusCode(200, "success") : NotFound();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return StatusCode(500, e.Message);
             }
@@ -57,7 +57,7 @@ namespace BookingApp.Server.Controllers
                 var success = await _productService.UpdateProductAsync(product);
                 return success ? StatusCode(200, "success") : NotFound();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return StatusCode(500, e.Message);
             }

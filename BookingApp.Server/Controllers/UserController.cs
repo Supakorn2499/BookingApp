@@ -26,7 +26,7 @@ namespace BookingApp.Server.Controllers
                     return BadRequest();
 
                 var result = await _userService.GetByUsernameAsync(user.username);
-                if(result != null) 
+                if (result != null)
                     return BadRequest("Username is already exit.");
 
                 var id = await _userService.AddAsync(user);
