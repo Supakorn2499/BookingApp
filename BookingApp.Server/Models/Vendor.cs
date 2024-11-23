@@ -3,12 +3,12 @@
     public class Vendor
     {
         public int id { get; set; }
-        public int? companyid { get; set; }
-        public int? vendorgroupid { get; set; }
-        public int? acchartid { get; set; }
-        public int? bankid { get; set; }
-        public int? bankbranchid { get; set; }
-        public int? paytypeid { get; set; }
+        public int? companyid { get; set; } = 0;
+        public int? vendorgroupid { get; set; } = 0;
+        public int? acchartid { get; set; } = 0;
+        public int? bankid { get; set; } = 0;
+        public int? bankbranchid { get; set; } = 0;
+        public int? paytypeid { get; set; } = 0;
         public string text_report_vendortype { get; set; }
         public string text_report_taxid { get; set; }
         public string text_report_cid { get; set; }
@@ -53,8 +53,8 @@
         public string singlelineaddress2 { get; set; }
         public string shippingby { get; set; }
         public string bussinesstype { get; set; }
-        public decimal? creditdays { get; set; }
-        public decimal? creditamt { get; set; }
+        public decimal? creditdays { get; set; } = 0;
+        public decimal? creditamt { get; set; } = 0;
         public string methodofpaymentcode { get; set; }
         public string bookbankno { get; set; }
         public string bookbankname { get; set; }
@@ -87,7 +87,7 @@
         public string createapp { get; set; }
         public string ivattype { get; set; }
         public string lineid { get; set; }
-        public int? iwhttype { get; set; }
-        public int? shippingid { get; set; }
+        public int? iwhttype { get; set; } = 0;
+        public int? shippingid { get; set; } = 0;
     }
 }
