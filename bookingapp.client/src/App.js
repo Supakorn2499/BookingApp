@@ -4,6 +4,7 @@ import Layout from "./Layout";
 import Dashboard from "./pages/Dashboard";
 import Booking from "./pages/Booking";
 import Login from "./pages/Login";
+import Product from "./pages/Product";
 export default function App() {
   return (
     <Router>
@@ -13,6 +14,7 @@ export default function App() {
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="booking" element={<Booking />} />
+          <Route path="product" element={<Product />} />
           {/* เพิ่มเส้นทางเพิ่มเติมตามต้องการ */}
         </Route>
       </Routes>

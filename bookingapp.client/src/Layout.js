@@ -151,7 +151,7 @@ const App = () => {
       id: 3,
       key: "products",
       name: t.products,
-      href: "/products",
+      href: "/product",
       initial: "P",
       current: false,
     },
