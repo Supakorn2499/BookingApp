@@ -1,36 +1,34 @@
-const Dashboard = () => ({ language = 'th' }) => {
-    const data = [
-      { name: "Jan", total: 1200 },
-      { name: "Feb", total: 900 },
-      { name: "Mar", total: 1600 },
-      { name: "Apr", total: 1400 },
-      { name: "May", total: 2000 },
-      { name: "Jun", total: 1800 },
-    ];
-  
-    const translations = {
-      th: {
-        title: 'แดชบอร์ด',
-        overview: 'ภาพรวม',
-        sales: 'ยอดขาย',
-        metrics: 'ตัวชี้วัด'
-      },
-      en: {
-        title: 'Dashboard',
-        overview: 'Overview',
-        sales: 'Sales',
-        metrics: 'Metrics'
-      }
-    };
-  
-    const currentLanguage = translations[language] ? language : 'th';
-    const t = translations[currentLanguage];
-  
-    return (
-      <div className="space-y-6">
-        <h2 className="text-lg font-bold">{t.title}</h2>
-      </div>
-    );
+import { useState } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+
+const Dashboard = ({ language = "th" }) => {
+  const translations = {
+    th: {
+      title: "แดชบอร์ด",
+      overview: "ภาพรวม",
+      sales: "ยอดขาย",
+      metrics: "ตัวชี้วัด",
+    },
+    en: {
+      title: "Dashboard",
+      overview: "Overview",
+      sales: "Sales",
+      metrics: "Metrics",
+    },
   };
 
-  export default Dashboard;
+  const currentLanguage = translations[language] ? language : "th";
+  const t = translations[currentLanguage];
+
+  return (
+    <div className="mt-2 md:flex md:items-center md:justify-between">
+      <div className="min-w-0 flex-1">
+        <h2 className="text-2xl/7 font-bold text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+          {t.title}
+        </h2>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;
