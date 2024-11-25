@@ -1,7 +1,12 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from '@headlessui/react'
+import { useState } from "react";
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  TransitionChild,
+} from "@headlessui/react";
 import {
   Bars3Icon,
   CalendarIcon,
@@ -16,44 +21,109 @@ import {
   CurrencyDollarIcon,
   BellAlertIcon,
   ClipboardDocumentListIcon,
-} from '@heroicons/react/24/outline'
-
-const navigation = [
-  { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-  { name: 'จองพื้นที่', href: '#', icon: CalendarIcon, current: false },
-  { name: 'ใบเสนอราคา', href: '#', icon: DocumentDuplicateIcon, current: false },
-  { name: 'สัญญาเช่า', href: '#', icon: DocumentDuplicateIcon, current: false },
-  { name: 'ชำระเงิน', href: '#', icon: CurrencyDollarIcon, current: false },
-  { name: 'ค่าใช้จ่าย', href: '#', icon: ClipboardDocumentListIcon, current: false },
-  { name: 'แจ้งหนี้', href: '#', icon: BellAlertIcon, current: false },
-  { name: 'รายงาน', href: '#', icon: ChartPieIcon, current: false },
-]
-const teams = [
-  { id: 1, name: 'บริษัท', href: '#', initial: 'C', current: false },
-  { id: 2, name: 'ลูกค้า', href: '#', initial: 'M', current: false },
-  { id: 3, name: 'สินค้าและบริการ', href: '#', initial: 'S', current: false },
-  { id: 4, name: 'อื่นๆ', href: '#', initial: 'O', current: false },
-]
+} from "@heroicons/react/24/outline";
+import Dashboard from "./components/Dashboard";
+import Reports from "./components/Reports";
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+const App = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState("th");
+  const [activeComponent, setActiveComponent] = useState("dashboard");
 
+  const translations = {
+    th: {
+      dashboard: "แดชบอร์ด",
+      booking: "จองพื้นที่",
+      quotation: "ใบเสนอราคา",
+      contract: "สัญญาเช่า",
+      payment: "ชำระเงิน",
+      expenses: "ค่าใช้จ่าย",
+      invoice: "แจ้งหนี้",
+      reports: "รายงาน",
+      company: "บริษัท",
+      customer: "ลูกค้า",
+      products: "สินค้าและบริการ",
+      others: "อื่นๆ",
+      database: "ฐานข้อมูล",
+      language: "English",
+    },
+    en: {
+      dashboard: "Dashboard",
+      booking: "Booking",
+      quotation: "Quotation",
+      contract: "Contract",
+      payment: "Payment",
+      expenses: "Expenses",
+      invoice: "Invoice",
+      reports: "Reports",
+      company: "Company",
+      customer: "Customer",
+      products: "Products & Service",
+      others: "Others",
+      database: "Database",
+      language: "ไทย",
+    },
+  };
+
+  const t = translations[currentLanguage];
+  const toggleLanguage = () => {
+    setCurrentLanguage(currentLanguage === "th" ? "en" : "th");
+  };
+
+  const navigation = [
+    { name: t.dashboard, href: "#", icon: HomeIcon, current: true },
+    { name: t.booking, href: "#", icon: CalendarIcon, current: false },
+    {
+      name: t.quotation,
+      href: "#",
+      icon: DocumentDuplicateIcon,
+      current: false,
+    },
+    {
+      name: t.contract,
+      href: "#",
+      icon: DocumentDuplicateIcon,
+      current: false,
+    },
+    { name: t.payment, href: "#", icon: CurrencyDollarIcon, current: false },
+    {
+      name: t.expenses,
+      href: "#",
+      icon: ClipboardDocumentListIcon,
+      current: false,
+    },
+    { name: t.invoice, href: "#", icon: BellAlertIcon, current: false },
+    { name: t.reports, href: "#", icon: ChartPieIcon, current: false },
+  ];
+  const teams = [
+    { id: 1, name: t.company, href: "#", initial: "C", current: false },
+    { id: 2, name: t.customer, href: "#", initial: "M", current: false },
+    { id: 3, name: t.products, href: "#", initial: "P", current: false },
+    { id: 4, name: t.others, href: "#", initial: "O", current: false },
+  ];
+
+  const renderComponent = () => {
+    switch (activeComponent) {
+      case "dashboard":
+        return <Dashboard language={currentLanguage} />;
+      case "reports":
+        return <Reports language={currentLanguage} />;
+      default:
+        return <Dashboard language={currentLanguage} />;
+    }
+  };
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
       <div>
-        <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
+        <Dialog
+          open={sidebarOpen}
+          onClose={setSidebarOpen}
+          className="relative z-50 lg:hidden"
+        >
           <DialogBackdrop
             transition
             className="fixed inset-0 bg-gray-900/80 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
@@ -66,9 +136,16 @@ export default function Example() {
             >
               <TransitionChild>
                 <div className="absolute left-full top-0 flex w-16 justify-center pt-5 duration-300 ease-in-out data-[closed]:opacity-0">
-                  <button type="button" onClick={() => setSidebarOpen(false)} className="-m-2.5 p-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setSidebarOpen(false)}
+                    className="-m-2.5 p-2.5"
+                  >
                     <span className="sr-only">Close sidebar</span>
-                    <XMarkIcon aria-hidden="true" className="size-6 text-white" />
+                    <XMarkIcon
+                      aria-hidden="true"
+                      className="size-6 text-white"
+                    />
                   </button>
                 </div>
               </TransitionChild>
@@ -91,16 +168,18 @@ export default function Example() {
                               href={item.href}
                               className={classNames(
                                 item.current
-                                  ? 'bg-indigo-700 text-white'
-                                  : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
-                                'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
+                                  ? "bg-indigo-700 text-white"
+                                  : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
+                                "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                               )}
                             >
                               <item.icon
                                 aria-hidden="true"
                                 className={classNames(
-                                  item.current ? 'text-white' : 'text-indigo-200 group-hover:text-white',
-                                  'size-6 shrink-0',
+                                  item.current
+                                    ? "text-white"
+                                    : "text-indigo-200 group-hover:text-white",
+                                  "size-6 shrink-0"
                                 )}
                               />
                               {item.name}
@@ -110,7 +189,9 @@ export default function Example() {
                       </ul>
                     </li>
                     <li>
-                      <div className="text-xs/6 font-semibold text-indigo-200">ฐานข้อมูล</div>
+                      <div className="text-xs/6 font-semibold text-indigo-200">
+                        {t.database}
+                      </div>
                       <ul role="list" className="-mx-2 mt-2 space-y-1">
                         {teams.map((team) => (
                           <li key={team.name}>
@@ -118,9 +199,9 @@ export default function Example() {
                               href={team.href}
                               className={classNames(
                                 team.current
-                                  ? 'bg-indigo-700 text-white'
-                                  : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
-                                'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
+                                  ? "bg-indigo-700 text-white"
+                                  : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
+                                "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                               )}
                             >
                               <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
@@ -160,16 +241,18 @@ export default function Example() {
                           href={item.href}
                           className={classNames(
                             item.current
-                              ? 'bg-indigo-700 text-white'
-                              : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
-                            'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
+                              ? "bg-indigo-700 text-white"
+                              : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
+                            "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                           )}
                         >
                           <item.icon
                             aria-hidden="true"
                             className={classNames(
-                              item.current ? 'text-white' : 'text-indigo-200 group-hover:text-white',
-                              'size-6 shrink-0',
+                              item.current
+                                ? "text-white"
+                                : "text-indigo-200 group-hover:text-white",
+                              "size-6 shrink-0"
                             )}
                           />
                           {item.name}
@@ -179,7 +262,9 @@ export default function Example() {
                   </ul>
                 </li>
                 <li>
-                  <div className="text-xs/6 font-semibold text-indigo-200">ฐานข้อมูล</div>
+                  <div className="text-xs/6 font-semibold text-indigo-200">
+                    {t.database}
+                  </div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
                     {teams.map((team) => (
                       <li key={team.name}>
@@ -187,9 +272,9 @@ export default function Example() {
                           href={team.href}
                           className={classNames(
                             team.current
-                              ? 'bg-indigo-700 text-white'
-                              : 'text-indigo-200 hover:bg-indigo-700 hover:text-white',
-                            'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold',
+                              ? "bg-indigo-700 text-white"
+                              : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
+                            "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                           )}
                         >
                           <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
@@ -221,11 +306,17 @@ export default function Example() {
         </div>
 
         <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-indigo-600 px-4 py-4 shadow-sm sm:px-6 lg:hidden">
-          <button type="button" onClick={() => setSidebarOpen(true)} className="-m-2.5 p-2.5 text-indigo-200 lg:hidden">
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(true)}
+            className="-m-2.5 p-2.5 text-indigo-200 lg:hidden"
+          >
             <span className="sr-only">Open sidebar</span>
             <Bars3Icon aria-hidden="true" className="size-6" />
           </button>
-          <div className="flex-1 text-sm/6 font-semibold text-white">Dashboard</div>
+          <div className="flex-1 text-sm/6 font-semibold text-white">
+            {t.dashboard}
+          </div>
           <a href="#">
             <span className="sr-only">Your profile</span>
             <img
@@ -237,9 +328,21 @@ export default function Example() {
         </div>
 
         <main className="py-10 lg:pl-72">
-          <div className="px-4 sm:px-6 lg:px-8">Hello....</div>
+          <div className="px-4 sm:px-6 lg:px-8">
+            <button
+              onClick={toggleLanguage}
+              variant="outline"
+              className="flex items-center space-x-2"
+            >
+              <span>{t.language}</span>
+            </button>
+            <h1 className="text-3xl font-bold mb-6">{t[activeComponent]}</h1>
+            {renderComponent()}
+          </div>
         </main>
       </div>
     </>
-  )
-}
+  );
+};
+
+export default App;
