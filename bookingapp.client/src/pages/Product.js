@@ -8,8 +8,9 @@ import {
 import { formatDateTime, formatNumber } from "./Utilitys";
 import { Link, useLocation } from "react-router-dom";
 import ProductForm from "../components/ProductForm.js";
+import { useOutletContext } from "react-router-dom";
 
-const Product = ({ language = "th" }) => {
+const Product = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
@@ -20,6 +21,7 @@ const Product = ({ language = "th" }) => {
   const [deleteId, setDeleteId] = useState(null);
   const [deleteName, setDeleteName] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const { language } = useOutletContext();
 
   const translations = {
     th: {
@@ -48,11 +50,11 @@ const Product = ({ language = "th" }) => {
       back: "หน้าหลัก",
       loading: "กำลังโหลดข้อมูล...",
       nodata: "ไม่มีข้อมูล",
-      confirmtitle : "ยืนยันการลบ",
+      confirmtitle: "ยืนยันการลบ",
       confirm_msg: "คุณต้องการลบสินค้า",
       cancel: "ยกเลิก",
-      popupformtitle_addnew : "เพิ่มสินค้าใหม่",
-      popupformtitle_update : "แก้ไขสินค้า",
+      popupformtitle_addnew: "เพิ่มสินค้าใหม่",
+      popupformtitle_update: "แก้ไขสินค้า",
     },
     en: {
       title: "Product and Server",
@@ -80,11 +82,11 @@ const Product = ({ language = "th" }) => {
       back: "Back",
       loading: "Loading...",
       nodata: "Data not found.",
-      confirmtitle : "Confirmation",
+      confirmtitle: "Confirmation",
       confirm_msg: "You want to delete the product.",
       cancel: "Cancel",
-      popupformtitle_addnew : "Add New Product",
-      popupformtitle_update : "Update Product",
+      popupformtitle_addnew: "Add New Product",
+      popupformtitle_update: "Update Product",
     },
   };
 
@@ -475,14 +477,19 @@ const Product = ({ language = "th" }) => {
         >
           {t.lastpage}
         </button>
-        <span className="mx-4"> {t.number} {totalRecords} {t.record}</span>
+        <span className="mx-4">
+          {" "}
+          {t.number} {totalRecords} {t.record}
+        </span>
       </div>
 
       {popupVisible && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-2xl font-bold mb-4">{t.confirmtitle}</h2>
-            <p>{t.confirm_msg} {deleteName} ?</p>
+            <p>
+              {t.confirm_msg} {deleteName} ?
+            </p>
             <div className="flex justify-end space-x-4 mt-4">
               <button
                 className="bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400"
@@ -505,7 +512,9 @@ const Product = ({ language = "th" }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
             <h2 className="text-2xl font-bold mb-4">
-              {formMode === "add" ? t.popupformtitle_addnew : t.popupformtitle_update}
+              {formMode === "add"
+                ? t.popupformtitle_addnew
+                : t.popupformtitle_update}
             </h2>
             {formMode === "add" ? (
               <ProductForm

@@ -5,19 +5,21 @@ import Dashboard from "./pages/Dashboard";
 import Booking from "./pages/Booking";
 import Login from "./pages/Login";
 import Product from "./pages/Product";
+import { LanguageProvider } from "./LanguageContext";
+
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="booking" element={<Booking />} />
-          <Route path="product" element={<Product />} />
-          {/* เพิ่มเส้นทางเพิ่มเติมตามต้องการ */}
-        </Route>
-      </Routes>
-    </Router>
+    <LanguageProvider>
+      <Router>
+        <Routes>
+          <Route index path="/" element={<Login />} />
+          <Route element={<Layout />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="booking" element={<Booking />} />
+            <Route path="product" element={<Product />} />
+          </Route>
+        </Routes>
+      </Router>
+    </LanguageProvider>
   );
 }

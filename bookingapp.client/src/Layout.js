@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { LanguageContext } from "./LanguageContext";
 import {
   Dialog,
   DialogBackdrop,
@@ -27,12 +28,9 @@ function classNames(...classes) {
 }
 
 const App = () => {
-  
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState("th");
-  const [activeComponent, setActiveComponent] = useState("dashboard");
   const location = useLocation();
-
+  const { language, toggleLanguage } = useContext(LanguageContext);
   const translations = {
     th: {
       dashboard: "แดชบอร์ด",
@@ -68,10 +66,7 @@ const App = () => {
     },
   };
 
-  const t = translations[currentLanguage];
-  const toggleLanguage = () => {
-    setCurrentLanguage(currentLanguage === "th" ? "en" : "th");
-  };
+  const t = translations[language];
 
   const navigation = [
     {
@@ -203,6 +198,7 @@ const App = () => {
                   src="https://tailwindui.com/plus/img/logos/mark.svg?color=white"
                   className="h-8 w-auto"
                 />
+               
               </div>
               <nav className="flex flex-1 flex-col">
                 <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -276,6 +272,14 @@ const App = () => {
               src="https://tailwindui.com/plus/img/logos/mark.svg?color=white"
               className="h-8 w-auto"
             />
+             <button
+                  onClick={toggleLanguage}
+                  className="bg-indigo-800 px-4 py-2 ml-2 text-white rounded"
+                >
+                  {language === "en"
+                    ? "ไทย"
+                    : "English"}
+                </button>
           </div>
           <nav className="flex flex-1 flex-col">
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -375,7 +379,7 @@ const App = () => {
 
       <main className="py-10 lg:pl-72">
         <div className="px-4 sm:px-6 lg:px-8">
-          <Outlet />
+          <Outlet context={{ language }}/>
         </div>
       </main>
     </div>
