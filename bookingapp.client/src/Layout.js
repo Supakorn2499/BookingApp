@@ -22,7 +22,8 @@ import {
   BellAlertIcon,
   ClipboardDocumentListIcon,
 } from "@heroicons/react/24/outline";
-import translations from '../src/resources/lang_menu'
+import translations from "./resources/LangMenu";
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -31,7 +32,7 @@ const App = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const { language, toggleLanguage } = useContext(LanguageContext);
-  
+
   const t = translations[language];
 
   const navigation = [

@@ -1,4 +1,4 @@
-const lang_menu = {
+const translations = {
     th: {
       dashboard: "แดชบอร์ด",
       booking: "จองพื้นที่",
@@ -33,5 +33,5 @@ const lang_menu = {
     },
   };
   
-  export default lang_menu;
+  export default translations;
   

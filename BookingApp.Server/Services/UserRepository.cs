@@ -188,9 +188,9 @@ namespace BookingApp.Server.Services
             {
                 const string query = @"
             SELECT * 
-            FROM user
-            WHERE username = @id and password= @password";
-
+            FROM users
+            WHERE username = @username and password= @password";
+                password = HasPassword.Sha1(password);
                 return await connection.QueryFirstOrDefaultAsync<User>(query, new { username = username, password = password });
             }
         }
