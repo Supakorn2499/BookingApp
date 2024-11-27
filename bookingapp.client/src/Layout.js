@@ -23,16 +23,20 @@ import {
   ClipboardDocumentListIcon,
 } from "@heroicons/react/24/outline";
 import translations from "./resources/LangMenu";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { AuthContext } from "./AuthContext";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const App = () => {
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const { language, toggleLanguage } = useContext(LanguageContext);
-
+  const { logout } = useContext(AuthContext);
   const t = translations[language];
 
   const navigation = [
@@ -127,6 +131,9 @@ const App = () => {
       current: false,
     },
   ];
+  const handleLogout = async (e) => {
+    logout();
+  }
 
   return (
     <div className="h-screen">
@@ -238,12 +245,7 @@ const App = () => {
               src="https://tailwindui.com/plus/img/logos/mark.svg?color=white"
               className="h-8 w-auto"
             />
-            <button
-              onClick={toggleLanguage}
-              className="bg-indigo-800 px-4 py-2 ml-2 text-white rounded"
-            >
-              {language === "en" ? "ไทย" : "English"}
-            </button>
+           
           </div>
           <nav className="flex flex-1 flex-col">
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -301,9 +303,9 @@ const App = () => {
                 </ul>
               </li>
               <li className="-mx-6 mt-auto">
-                <a
+                <div
                   href="#"
-                  className="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-white hover:bg-indigo-700"
+                  className="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-white hover:bg-indigo-700 justify-between"
                 >
                   <img
                     alt=""
@@ -312,7 +314,43 @@ const App = () => {
                   />
                   <span className="sr-only">Your profile</span>
                   <span aria-hidden="true">ศุภกร อ้นวิเชียร</span>
-                </a>
+
+                  <Menu as="div" className="relative inline-block text-left">
+                    <div>
+                      <MenuButton className="flex items-center rounded-full bg-gray-100 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+                        <span className="sr-only">Open options</span>
+                        <EllipsisVerticalIcon
+                          aria-hidden="true"
+                          className="size-5"
+                        />
+                      </MenuButton>
+                    </div>
+
+                    <MenuItems
+                      transition
+                      className="absolute bottom-7 right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                    >
+                      <div className="py-1">
+                        <MenuItem>
+                          <button
+                            onClick={toggleLanguage}
+                            className="block w-full px-4 py-2 text-sm text-left text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                          >
+                            {language === "en" ? "เปลี่ยนภาษา : ไทย" : "Switch language : English"}
+                          </button>
+                        </MenuItem>
+                        <MenuItem>
+                            <button
+                              onClick={handleLogout}
+                              className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                            >
+                              {t.signout_button}
+                            </button>
+                          </MenuItem>
+                      </div>
+                    </MenuItems>
+                  </Menu>
+                </div>
               </li>
             </ul>
           </nav>

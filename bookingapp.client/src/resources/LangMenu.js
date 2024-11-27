@@ -14,6 +14,7 @@ const translations = {
       others: "อื่นๆ",
       database: "ฐานข้อมูล",
       language: "English",
+      signout_button: "ออกจากระบบ",
     },
     en: {
       dashboard: "Dashboard",
@@ -30,6 +31,7 @@ const translations = {
       others: "Others",
       database: "Database",
       language: "ไทย",
+      signout_button: "Sign out",
     },
   };
   

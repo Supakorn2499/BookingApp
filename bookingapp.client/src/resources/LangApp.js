@@ -1,5 +1,4 @@
-
- const translations = {
+const translations = {
   th: {
     product_title: "สินค้าและบริการ",
     product_mainpage: "สินค้า",
@@ -45,6 +44,7 @@
     signin_failed_msg: "ไม่สามารถเข้าระบบได้ตรวจสอบรหัสผ่านอีกครั้ง",
     language_text: "เปลี่ยนภาษา :",
     button_close: "ปิด",
+
   },
   en: {
     product_title: "Product and Service",
@@ -91,6 +91,7 @@
     signin_failed_msg: "Incorrect username or password.",
     language_text: "Language :",
     button_close: "Close",
+
   },
 };
 export default translations;
