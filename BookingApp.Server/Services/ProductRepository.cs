@@ -114,6 +114,7 @@ namespace BookingApp.Server.Services
             FROM product
             WHERE (@Keyword IS NULL OR 
                    LOWER(name1) LIKE LOWER(@Keyword) OR 
+                   LOWER(name2) LIKE LOWER(@Keyword) OR
                    LOWER(code) LIKE LOWER(@Keyword))
             ORDER BY id
             OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
@@ -122,9 +123,10 @@ namespace BookingApp.Server.Services
             FROM product
             WHERE (@Keyword IS NULL OR 
                    LOWER(name1) LIKE LOWER(@Keyword) OR 
+                   LOWER(name2) LIKE LOWER(@Keyword) OR
                    LOWER(code) LIKE LOWER(@Keyword));";
 
-                var offset = (pageNumber - 1) * pageSize;
+               var offset = (pageNumber - 1) * pageSize;
 
                 using (var multi = await connection.QueryMultipleAsync(query, new
                 {

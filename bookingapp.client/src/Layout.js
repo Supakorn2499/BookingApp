@@ -27,6 +27,7 @@ function classNames(...classes) {
 }
 
 const App = () => {
+  
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState("th");
   const [activeComponent, setActiveComponent] = useState("dashboard");
@@ -44,7 +45,7 @@ const App = () => {
       reports: "รายงาน",
       company: "บริษัท",
       customer: "ลูกค้า",
-      products: "สินค้าและบริการ",
+      products: "สินค้า",
       others: "อื่นๆ",
       database: "ฐานข้อมูล",
       language: "English",
