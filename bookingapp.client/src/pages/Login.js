@@ -1,8 +1,9 @@
-import React, { useContext, useState  } from "react";
+import React, { useContext, useState } from "react";
 import { LanguageContext } from "../LanguageContext";
 import translations from "../resources/LangApp";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
+import Swal from "sweetalert2";
 import api from "./apiConfig";
 
 export default function Login() {
@@ -18,23 +19,30 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://localhost:7005/Auth/Login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Login failed. Please check your credentials.");
-      }
-
-      const data = await response.json();
-      login(data.token);
+      const response = await api.post(
+        "/Auth/Login",
+        { username, password },
+        { headers: { "Content-Type": "application/json" } }
+      );
+      const { token, role } = response.data;
+      login(token);
       navigate("/");
     } catch (error) {
-      setError(error.message);
+      if (error.response && error.response.status === 401) {
+        Swal.fire({
+          //icon: "error",
+          title: t.signin_failed_title,
+          text: t.signin_failed_msg,
+          confirmButtonText: t.button_close,
+        });
+      } else {
+        Swal.fire({
+          //icon: "error",
+          title: t.signin_failed_title,
+          text: error.message || "Something went wrong. Please try again.",
+        });
+      }
+    } finally {
     }
   };
 

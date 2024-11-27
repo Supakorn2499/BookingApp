@@ -28,7 +28,7 @@ namespace BookingApp.Server.Controllers
                 var result = await _userService.LoginAsync(req.username, req.password);
 
                 if (result == null)
-                    return Unauthorized(new { message = "Invalid username or password" });
+                    return StatusCode(401, "Invalid username or password");//Unauthorized(new { message = "Invalid username or password" });
 
                 var token = _jwtService.GenerateToken(req.username, "admin");
                 return Ok(new AuthResponse { token = token, role = "admin" });

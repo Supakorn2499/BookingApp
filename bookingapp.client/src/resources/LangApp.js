@@ -41,7 +41,10 @@
     signin_button_login: "เข้าสู่ระบบ",
     signin_remember: "จดจำรหัสผ่าน",
     signin_forgot_password: "ลืมระหัสผ่าน",
+    signin_failed_title: "แจ้งเตื่อน",
+    signin_failed_msg: "ไม่สามารถเข้าระบบได้ตรวจสอบรหัสผ่านอีกครั้ง",
     language_text: "เปลี่ยนภาษา :",
+    button_close: "ปิด",
   },
   en: {
     product_title: "Product and Service",
@@ -84,7 +87,10 @@
     signin_button_login: "Sign in",
     signin_remember: "Rememer me",
     signin_forgot_password: "Forgot password?",
+    signin_failed_title: "Warning",
+    signin_failed_msg: "Incorrect username or password.",
     language_text: "Language :",
+    button_close: "Close",
   },
 };
 export default translations;
