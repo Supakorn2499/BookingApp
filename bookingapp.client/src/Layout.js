@@ -22,7 +22,7 @@ import {
   BellAlertIcon,
   ClipboardDocumentListIcon,
 } from "@heroicons/react/24/outline";
-
+import translations from '../src/resources/lang_menu'
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -31,41 +31,7 @@ const App = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const { language, toggleLanguage } = useContext(LanguageContext);
-  const translations = {
-    th: {
-      dashboard: "แดชบอร์ด",
-      booking: "จองพื้นที่",
-      quotation: "ใบเสนอราคา",
-      contract: "สัญญาเช่า",
-      payment: "ชำระเงิน",
-      expenses: "ค่าใช้จ่าย",
-      invoice: "แจ้งหนี้",
-      reports: "รายงาน",
-      company: "บริษัท",
-      customer: "ลูกค้า",
-      products: "สินค้า",
-      others: "อื่นๆ",
-      database: "ฐานข้อมูล",
-      language: "English",
-    },
-    en: {
-      dashboard: "Dashboard",
-      booking: "Booking",
-      quotation: "Quotation",
-      contract: "Contract",
-      payment: "Payment",
-      expenses: "Expenses",
-      invoice: "Invoice",
-      reports: "Reports",
-      company: "Company",
-      customer: "Customer",
-      products: "Products & Service",
-      others: "Others",
-      database: "Database",
-      language: "ไทย",
-    },
-  };
-
+  
   const t = translations[language];
 
   const navigation = [
@@ -198,7 +164,6 @@ const App = () => {
                   src="https://tailwindui.com/plus/img/logos/mark.svg?color=white"
                   className="h-8 w-auto"
                 />
-               
               </div>
               <nav className="flex flex-1 flex-col">
                 <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -272,14 +237,12 @@ const App = () => {
               src="https://tailwindui.com/plus/img/logos/mark.svg?color=white"
               className="h-8 w-auto"
             />
-             <button
-                  onClick={toggleLanguage}
-                  className="bg-indigo-800 px-4 py-2 ml-2 text-white rounded"
-                >
-                  {language === "en"
-                    ? "ไทย"
-                    : "English"}
-                </button>
+            <button
+              onClick={toggleLanguage}
+              className="bg-indigo-800 px-4 py-2 ml-2 text-white rounded"
+            >
+              {language === "en" ? "ไทย" : "English"}
+            </button>
           </div>
           <nav className="flex flex-1 flex-col">
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -379,7 +342,7 @@ const App = () => {
 
       <main className="py-10 lg:pl-72">
         <div className="px-4 sm:px-6 lg:px-8">
-          <Outlet context={{ language }}/>
+          <Outlet context={{ language }} />
         </div>
       </main>
     </div>
