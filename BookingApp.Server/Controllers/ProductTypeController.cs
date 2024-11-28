@@ -97,7 +97,16 @@ namespace BookingApp.Server.Controllers
 
             return Ok(user);
         }
+        [HttpGet("ProdType/GetByCode")]
+        public async Task<IActionResult> GetByCode(string code)
+        {
+            var user = await _prodTypeService.GetByCodeAsync(code);
 
+            if (user == null)
+                return NotFound($"ProductType with ID {code} not found.");
+
+            return Ok(user);
+        }
 
     }
 }

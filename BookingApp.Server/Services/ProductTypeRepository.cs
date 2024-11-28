@@ -143,5 +143,19 @@ namespace BookingApp.Server.Services
             }
         }
 
+        public async Task<ProductType?> GetByCodeAsync(string code)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                const string query = @"
+            SELECT * 
+            FROM prodtype
+            WHERE code = @code;";
+
+                return await connection.QueryFirstOrDefaultAsync<ProductType>(query, new { code = code });
+            }
+        }
+
+
     }
 }

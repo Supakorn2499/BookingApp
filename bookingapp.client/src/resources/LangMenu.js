@@ -15,6 +15,8 @@ const translations = {
       database: "ฐานข้อมูล",
       language: "English",
       signout_button: "ออกจากระบบ",
+      productgroup: "กลุ่มสินค้า",
+      vattype:"ประเภทภาษี",
     },
     en: {
       dashboard: "Dashboard",
@@ -32,6 +34,8 @@ const translations = {
       database: "Database",
       language: "ไทย",
       signout_button: "Sign out",
+      productgroup: "Product Group",
+      vattype:"Vattype"
     },
   };
   

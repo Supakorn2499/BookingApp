@@ -7,11 +7,11 @@ import {
 } from "@heroicons/react/20/solid";
 import { formatDateTime, formatNumber } from "./Utilitys";
 import { Link, useLocation } from "react-router-dom";
-import ProductForm from "../components/ProductForm.js";
+import ProductGroupForm from "../components/ProductGroupForm.js";
 import { useOutletContext } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const Product = () => {
+const ProductGroup = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
@@ -27,18 +27,16 @@ const Product = () => {
   // แปลภาษา
   const translations = {
     th: {
-      title: "สินค้าและบริการ",
+      title: "กลุ่มสินค้า",
       navbar: "สินค้า",
-      keyword: "รหัสสินค้า/ชื่อสินค้า",
-      create: "เพิ่มสินค้าใหม่",
-      code: "รหัสสินค้า",
-      name1: "ชื่อสินค้าไทย",
-      name2: "ชื่อสินค้าอังกฤษ",
-      price: "ราคา",
+      keyword: "รหัสกลุ่มสินค้า/ชื่อกลุ่มสินค้า",
+      create: "เพิ่มกลุ่มสินค้าใหม่",
+      code: "รหัสกลุ่มสินค้า",
+      name1: "ชื่อกลุ่มสินค้าไทย",
+      name2: "ชื่อกลุ่มสินค้าอังกฤษ",      
       active: "สถานะ",
       createdate: "วันที่สร้าง",
       createby: "สร้างโดย",
-      unitname: "หน่วย",
       delete: "ลบ",
       update: "แก้ไข",
       firstpage: "หน้าแรก",
@@ -54,10 +52,10 @@ const Product = () => {
       loading: "กำลังโหลดข้อมูล...",
       nodata: "ไม่พบข้อมูล",
       confirmtitle: "ยืนยันการลบ",
-      confirm_msg: "คุณต้องการลบสินค้า",
+      confirm_msg: "คุณต้องการลบกลุ่มสินค้า",
       cancel: "ยกเลิก",
-      popupformtitle_addnew: "เพิ่มสินค้าใหม่",
-      popupformtitle_update: "แก้ไขสินค้า",
+      popupformtitle_addnew: "เพิ่มกลุ่มสินค้าใหม่",
+      popupformtitle_update: "แก้ไขกลุ่มสินค้า",
       swal_title: "แจ้งเตือน",
       swal_failed_msg: "เกิดข้อผิดพลาด",
       swal_success_msg: "บันทึกข้อมูลสำเร็จ",
@@ -66,14 +64,13 @@ const Product = () => {
       swal_button_cancel: "ยกเลิก",
     },
     en: {
-      title: "Product and Server",
+      title: "Product Group",
       navbar: "Product",
       keyword: "Code/Name",
       create: "Add New",
       code: "Code",
       name1: "Name (Thail)",
       name2: "Name (English)",
-      price: "Price",
       active: "Status",
       createdate: "Create Date",
       createby: "Create by",
@@ -93,12 +90,12 @@ const Product = () => {
       loading: "Loading...",
       nodata: "Data not found.",
       confirmtitle: "Confirmation",
-      confirm_msg: "You want to delete the product.",
+      confirm_msg: "You want to delete the product group.",
       cancel: "Cancel",
-      popupformtitle_addnew: "Add New Product",
-      popupformtitle_update: "Update Product",
+      popupformtitle_addnew: "Add New Product Group",
+      popupformtitle_update: "Update Product Group",
       swal_title: "Information",
-      swal_failed_msg: "Failed to create product. Please try again.",
+      swal_failed_msg: "Failed to create product Group. Please try again.",
       swal_success_msg: "Product created successfully!",
       swal_button_clsoe: "Close",
       swal_button_ok: "Ok",
@@ -121,7 +118,7 @@ const Product = () => {
     setIsLoading(true);
     setErrorMessage("");
     try {
-      const { data } = await api.get("/Product/Search", {
+      const { data } = await api.get("/ProdGroup/Search", {
         params: {
           pageNumber: pageNumber,
           pageSize: ITEMS_PER_PAGE,
@@ -133,7 +130,7 @@ const Product = () => {
       setTotalPages(data.totalPages || 1);
       settotalRecords(data.totalRecords || 0);
     } catch (error) {
-      setErrorMessage("ไม่สามารถโหลดข้อมูลสินค้าได้");
+      setErrorMessage("ไม่สามารถโหลดข้อมูลกลุ่มสินค้าได้");
       console.error("Error fetching products:", error);
     } finally {
       setIsLoading(false);
@@ -164,7 +161,7 @@ const Product = () => {
     console.log(JSON.stringify(formData));
     try {
       const response = await api.post(
-        "/Product/Create",
+        "/ProdGroup/Create",
         JSON.stringify(formData),
         { headers: { "Content-Type": "application/json" } }
       );
@@ -194,7 +191,7 @@ const Product = () => {
     try {
       console.log(JSON.stringify(formData));
       const response = await api.put(
-        "/Product/Update?id=" + formData.id,
+        "/ProdGroup/Update?id=" + formData.id,
         JSON.stringify(formData),
         { headers: { "Content-Type": "application/json" } }
       );
@@ -222,10 +219,10 @@ const Product = () => {
   // ลบข้อมูลออกจากระบบ
   const handleDelete = async () => {
     try {
-      await api.delete(`/Product/Delete/?id=${deleteId}`);
+      await api.delete(`/ProdGroup/Delete/?id=${deleteId}`);
       setProducts((prev) => prev.filter((product) => product.id !== deleteId));
     } catch (error) {
-      console.error("Error deleting product:", error);
+      console.error("Error deleting product group:", error);
     } finally {
       setPopupVisible(false);
       setDeleteId(null);
@@ -349,12 +346,6 @@ const Product = () => {
                 <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
                   {translation.name2}
                 </th>
-                <th className="px-4 py-1 text-right text-sm font-semibold text-gray-900">
-                  {translation.price}
-                </th>
-                <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
-                  {translation.unitname}
-                </th>
                 <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
                   {translation.active}
                 </th>
@@ -393,12 +384,7 @@ const Product = () => {
                 <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
                   {translation.name2}
                 </th>
-                <th className="px-4 py-1 text-right text-sm font-semibold text-gray-900">
-                  {translation.price}
-                </th>
-                <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
-                  {translation.unitname}
-                </th>
+
                 <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
                   {translation.active}
                 </th>
@@ -422,12 +408,6 @@ const Product = () => {
                   </td>
                   <td className="whitespace-nowrap p-1 text-sm text-gray-600">
                     {product.name2}
-                  </td>
-                  <td className="whitespace-nowrap p-1 text-sm text-right text-gray-600">
-                    {formatNumber(product.saleprice)}
-                  </td>
-                  <td className="whitespace-nowrap p-1 text-sm text-gray-600">
-                    {product.unitname}
                   </td>
                   <td className="whitespace-nowrap p-1 text-sm text-center text-gray-600">
                     {product.active === "Y" ? "Active" : "Inactive"}
@@ -453,15 +433,9 @@ const Product = () => {
                         setFormData({
                           id: product.id,
                           companyid: 1,
-                          productgroupid: product.productgroupid,
                           name1: product.name1,
                           name2: product.name2,
                           code: product.code,
-                          prodtype: product.prodtype,
-                          vattype: product.vattype,
-                          saleprice: product.saleprice,
-                          unitname: product.unitname,
-                          remark: product.remark,
                           active: product.active
                         });
                         setFormVisible(true);
@@ -518,7 +492,9 @@ const Product = () => {
       {popupVisible && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">{translation.confirmtitle}</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              {translation.confirmtitle}
+            </h2>
             <p>
               {translation.confirm_msg} {deleteName} ?
             </p>
@@ -549,14 +525,14 @@ const Product = () => {
                 : translation.popupformtitle_update}
             </h2>
             {formMode === "add" ? (
-              <ProductForm
+              <ProductGroupForm
                 initialData={null}
                 onSubmit={handleCreateProduct}
                 onCancel={handleClosForm}
                 language
               />
             ) : (
-              <ProductForm
+              <ProductGroupForm
                 initialData={formData}
                 onSubmit={handleEditProduct}
                 onCancel={handleClosForm}
@@ -570,4 +546,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default ProductGroup;

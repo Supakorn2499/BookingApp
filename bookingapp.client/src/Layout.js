@@ -124,10 +124,18 @@ const App = () => {
     },
     {
       id: 4,
-      key: "others",
-      name: t.others,
-      href: "/others",
-      initial: "O",
+      key: "productgroup",
+      name: t.productgroup,
+      href: "/productgroup",
+      initial: "G",
+      current: false,
+    },
+    {
+      id: 4,
+      key: "vattype",
+      name: t.vattype,
+      href: "/vattype",
+      initial: "V",
       current: false,
     },
   ];

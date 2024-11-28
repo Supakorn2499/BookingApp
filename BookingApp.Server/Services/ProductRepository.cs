@@ -24,31 +24,31 @@ namespace BookingApp.Server.Services
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
-                INSERT INTO product (companyid,productgroupid, umid,code, status, 
-                active, inactivedate, name1,name2,stdprice,stdcost,minprice,remark1,createby, createatutc) 
-                VALUES (@companyid,@productgroupid, @umid,@code, @status, 
-                @active, @inactivedate, @name1,@name2,@stdprice,@stdcost,@minprice,@remark1,@createby, @createatutc)
+                INSERT INTO product (companyid,productgroupid,code, status, 
+                active, inactivedate, name1,name2,saleprice,unitname,remark,vattype,prodtype,createby, createatutc) 
+                VALUES (@companyid,@productgroupid,@code, @status, 
+                @active, @inactivedate, @name1,@name2,@saleprice,@unitname,@remark,@vattype,@prodtype,@createby, @createatutc)
                 RETURNING id;";
 
                 var paraments = new
                 {
                     companyid = 1,
                     productgroupid = product.productgroupid,
-                    umid = product.umid,
                     code = product.code,
                     status = product.status,
                     active = product.active,
                     inactivedate = DateTimeHelper.ConvertToUtc(product.inactivedate),
                     name1 = product.name1,
                     name2 = product.name2,
-                    stdprice = product.stdprice,
-                    stdcost = product.stdcost,
-                    minprice = product.minprice,
-                    remark1 = product.remark1,
+                    prodtype = product.prodtype,
+                    saleprice = product.saleprice,
+                    unitname = product.unitname,
+                    remark = product.remark,
+                    vattype = product.vattype,
                     createby = product.createby,
                     createatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)
                 };
-
+                string sql = DapperHelper.DebugSql(query, paraments);
                 return await connection.ExecuteScalarAsync<int>(query, paraments);
             }
         }
@@ -70,36 +70,41 @@ namespace BookingApp.Server.Services
                 const string query = @"
                 UPDATE product 
                 SET productgroupid=@productgroupid, 
-                    umid=@umid,
                     code=@code, 
                     status=@status, 
                     active=@active, 
                     inactivedate=@inactivedate, 
                     name1=@name1,
                     name2=@name1,
-                    stdprice=@stdprice,
-                    remark1=@remark1,
+                    saleprice=@saleprice,
+                    remark=@remark,
                     updateby = @updateby, 
-                    updateatutc = @updateatutc
+                    updateatutc = @updateatutc,
+                    prodtype = @prodtype,
+                    vattype =@vattype,
+                    unitname =@unitname
                 WHERE id = @id;";
 
                 var paraments = new
                 {
                     id = product.id,
+                    companyid = 1,
                     productgroupid = product.productgroupid,
-                    umid = product.umid,
                     code = product.code,
                     status = product.status,
                     active = product.active,
                     inactivedate = DateTimeHelper.ConvertToUtc(product.inactivedate),
                     name1 = product.name1,
                     name2 = product.name2,
-                    stdprice = product.stdprice,
-                    remark1 = product.remark1,
+                    prodtype = product.prodtype,
+                    saleprice = product.saleprice,
+                    unitname = product.unitname,
+                    remark = product.remark,
+                    vattype = product.vattype,
                     updateby = product.updateby,
                     updateatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)
                 };
-
+                string sql = DapperHelper.DebugSql(query, paraments);
                 var rowsAffected = await connection.ExecuteAsync(query, paraments);
                 return rowsAffected > 0;
             }

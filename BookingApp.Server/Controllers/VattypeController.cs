@@ -88,8 +88,10 @@ namespace BookingApp.Server.Controllers
         }
 
         [HttpGet("Vattype/GetById")]
-        public async Task<IActionResult> GetUserById(int id)
+        public async Task<IActionResult> GetUserById(int id = 1)
         {
+            if(id == 0) { id = 1; };
+
             var user = await _vattypeService.GetByIdAsync(id);
 
             if (user == null)

@@ -22,5 +22,9 @@ namespace BookingApp.Server.Services
         {
             return await _repository.GetByIdAsync(id);
         }
+        public async Task<ProductType?> GetByCodeAsync(string code)
+        {
+            return await _repository.GetByCodeAsync(code);
+        }
     }
 }

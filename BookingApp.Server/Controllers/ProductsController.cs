@@ -51,11 +51,14 @@ namespace BookingApp.Server.Controllers
         {
             try
             {
+                if (product == null)
+                    return BadRequest();
+
                 if (id != product.id)
                     return BadRequest();
 
                 var success = await _productService.UpdateProductAsync(product);
-                return success ? StatusCode(200, "success") : NotFound();
+                return success ? StatusCode(200, success) : NotFound();
             }
             catch (Exception e)
             {
