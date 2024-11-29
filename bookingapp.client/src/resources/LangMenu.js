@@ -22,6 +22,8 @@ const translations = {
       prodtype: "ประเภทสินค้า",
       bankbranch: "สาขาธานคาร",
       bookbank: "สมุดบัญชี",
+      saleteam: "ทีมขาย",
+      saleman: "พนักงานขาย",
     },
     en: {
       dashboard: "Dashboard",
@@ -46,6 +48,8 @@ const translations = {
       prodtype: "Product Type",
       bankbranch: "Bank Branch",
       bookbank: "Bookbank",
+      saleteam: "Sale Team",
+      saleman: "Saleman",
     },
   };
   

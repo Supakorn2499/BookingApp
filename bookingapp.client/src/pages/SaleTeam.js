@@ -7,11 +7,11 @@ import {
 } from "@heroicons/react/20/solid";
 import { formatDateTime, formatNumber } from "./Utilitys";
 import { Link, useLocation } from "react-router-dom";
-import  PaytypeForm from "../components/PaytypeForm.js";
+import SaleTeamForm from "../components/SaleTeamForm.js";
 import { useOutletContext } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const Paytype = () => {
+const SaleTeam = () => {
   const [data, setDatas] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
@@ -27,8 +27,8 @@ const Paytype = () => {
   // แปลภาษา
   const translations = {
     th: {
-      title: "ประเภทการชำระ",
-      navbar: "ธนาคาร",
+      title: "ข้อมูลทีมขาย",
+      navbar: "ทีมขาย",
       keyword: "ค้นหาด้วยรหัส/ชื่อ",
       create: "เพิ่มใหม่",
       code: "รหัส",
@@ -64,8 +64,8 @@ const Paytype = () => {
       swal_button_cancel: "ยกเลิก",
     },
     en: {
-      title: "Payment Type",
-      navbar: "Bank",
+      title: "SaleTeam",
+      navbar: "Product",
       keyword: "Code/Name",
       create: "Add New",
       code: "Code",
@@ -117,7 +117,7 @@ const Paytype = () => {
     setIsLoading(true);
     setErrorMessage("");
     try {
-      const { data } = await api.get("/Paytype/Search", {
+      const { data } = await api.get("/SaleTeam/Search", {
         params: {
           pageNumber: pageNumber,
           pageSize: ITEMS_PER_PAGE,
@@ -160,7 +160,7 @@ const Paytype = () => {
     console.log(JSON.stringify(formData));
     try {
       const response = await api.post(
-        "/Paytype/Create",
+        "/SaleTeam/Create",
         JSON.stringify(formData),
         { headers: { "Content-Type": "application/json" } }
       );
@@ -190,7 +190,7 @@ const Paytype = () => {
     try {
       //console.log(JSON.stringify(formData));
       const response = await api.put(
-        "/Paytype/Update?id=" + formData.id,
+        "/SaleTeam/Update?id=" + formData.id,
         JSON.stringify(formData),
         { headers: { "Content-Type": "application/json" } }
       );
@@ -218,7 +218,7 @@ const Paytype = () => {
   // ลบข้อมูลออกจากระบบ
   const handleDelete = async () => {
     try {
-      await api.delete(`/Paytype/Delete/?id=${deleteId}`);
+      await api.delete(`/SaleTeam/Delete/?id=${deleteId}`);
       setDatas((prev) => prev.filter((data) => data.id !== deleteId));
     } catch (error) {
       console.error("Error deleting data:", error);
@@ -261,7 +261,7 @@ const Paytype = () => {
           <li>
             <div className="flex">
               <Link
-                to="/bank"
+                to="/SaleTeam"
                 className="text-sm font-medium text-gray-500 hover:text-gray-700"
               >
                 {translation.navbar}
@@ -435,11 +435,7 @@ const Paytype = () => {
                           name1:  d.name1,
                           name2:  d.name2,
                           code: d.code,
-                          active: d.active,
-                          isdeposit: d.isdeposit,
-                          iswithdraw: d.iswithdraw,
-                          group: d.group,
-                          inout: d.inout,
+                          active: d.active
                         });
                         setFormVisible(true);
                       }}
@@ -528,14 +524,14 @@ const Paytype = () => {
                 : translation.popupformtitle_update}
             </h2>
             {formMode === "add" ? (
-              < PaytypeForm
+              <SaleTeamForm
                 initialData={null}
                 onSubmit={handleCreate}
                 onCancel={handleClosForm}
                 language
               />
             ) : (
-              < PaytypeForm
+              <SaleTeamForm
                 initialData={formData}
                 onSubmit={handleEdit}
                 onCancel={handleClosForm}
@@ -549,4 +545,4 @@ const Paytype = () => {
   );
 };
 
-export default Paytype;
+export default SaleTeam;

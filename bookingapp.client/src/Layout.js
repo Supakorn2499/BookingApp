@@ -32,7 +32,6 @@ function classNames(...classes) {
 }
 
 const App = () => {
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const { language, toggleLanguage } = useContext(LanguageContext);
@@ -129,7 +128,8 @@ const App = () => {
       href: "/productgroup",
       initial: "G",
       current: false,
-    },{
+    },
+    {
       id: 5,
       key: "prodtype",
       name: t.prodtype,
@@ -152,14 +152,16 @@ const App = () => {
       href: "/bank",
       initial: "B",
       current: false,
-    },{
+    },
+    {
       id: 8,
       key: "bankbranch",
       name: t.bankbranch,
       href: "/bankbranch",
       initial: "BH",
       current: false,
-    },{
+    },
+    {
       id: 9,
       key: "bookbank",
       name: t.bookbank,
@@ -175,10 +177,26 @@ const App = () => {
       initial: "P",
       current: false,
     },
+    {
+      id: 11,
+      key: "saleteam",
+      name: t.saleteam,
+      href: "/saleteam",
+      initial: "ST",
+      current: false,
+    },
+    {
+      id: 12,
+      key: "saleman",
+      name: t.saleman,
+      href: "/saleman",
+      initial: "SM",
+      current: false,
+    },
   ];
   const handleLogout = async (e) => {
     logout();
-  }
+  };
 
   return (
     <div className="h-screen">
@@ -290,7 +308,6 @@ const App = () => {
               src="https://tailwindui.com/plus/img/logos/mark.svg?color=white"
               className="h-8 w-auto"
             />
-           
           </div>
           <nav className="flex flex-1 flex-col">
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -381,17 +398,19 @@ const App = () => {
                             onClick={toggleLanguage}
                             className="block w-full px-4 py-2 text-sm text-left text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
                           >
-                            {language === "en" ? "เปลี่ยนภาษา : ไทย" : "Switch language : English"}
+                            {language === "en"
+                              ? "เปลี่ยนภาษา : ไทย"
+                              : "Switch language : English"}
                           </button>
                         </MenuItem>
                         <MenuItem>
-                            <button
-                              onClick={handleLogout}
-                              className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
-                            >
-                              {t.signout_button}
-                            </button>
-                          </MenuItem>
+                          <button
+                            onClick={handleLogout}
+                            className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                          >
+                            {t.signout_button}
+                          </button>
+                        </MenuItem>
                       </div>
                     </MenuItems>
                   </Menu>

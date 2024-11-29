@@ -15,6 +15,7 @@ import Bank from "./pages/Bank";
 import ProdType from "./pages/ProductType";
 import BankBranch from "./pages/BankBranch";
 import BookBank from "./pages/Bookbank";
+import SaleTeam from "./pages/SaleTeam";
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
                 <Route path="ProdType" element={<ProdType />} />
                 <Route path="BankBranch" element={<BankBranch />} />
                 <Route path="BookBank" element={<BookBank />} />
+                <Route path="SaleTeam" element={<SaleTeam />} />
               </Route>
             </Route>
           </Routes>

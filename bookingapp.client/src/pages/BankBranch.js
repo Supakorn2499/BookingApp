@@ -131,7 +131,7 @@ const BankBranch = () => {
       setTotalPages(data.totalPages || 1);
       settotalRecords(data.totalRecords || 0);
     } catch (error) {
-      setErrorMessage("ไม่สามารถโหลดข้อมูลกลุ่มสินค้าได้");
+      setErrorMessage("ไม่สามารถโหลดข้อมูล");
       console.error("Error fetching data:", error);
     } finally {
       setIsLoading(false);
