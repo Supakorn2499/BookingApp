@@ -20,6 +20,7 @@ const translations = {
       paytype: "ประเภทชำระ",
       bank: "ธนาคาร",
       prodtype: "ประเภทสินค้า",
+      bankbranch: "สาขาธานคาร",
     },
     en: {
       dashboard: "Dashboard",
@@ -42,6 +43,7 @@ const translations = {
       paytype: "Paytype",
       bank: "Bank",
       prodtype: "Product Type",
+      bankbranch: "Bank Branch",
     },
   };
   

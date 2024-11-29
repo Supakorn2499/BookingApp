@@ -1,14 +1,6 @@
 const translations = {
   th: {
-    product_title: "สินค้าและบริการ",
-    product_mainpage: "สินค้า",
-    product_keyword: "รหัสสินค้า/ชื่อสินค้า",
-    product_button_create: "เพิ่มสินค้าใหม่",
-    product_table_code: "รหัสสินค้า",
-    product_table_name1: "ชื่อสินค้าไทย",
-    product_table_name2: "ชื่อสินค้าอังกฤษ",
-    product_table_price: "ราคา/หน่วย",
-    price: "ราคา",
+
     status: "สถานะ",
     createdate: "วันที่สร้าง",
     createby: "สร้างโดย",
@@ -33,7 +25,7 @@ const translations = {
     cancel: "ยกเลิก",
     popupform_title_addnew: "เพิ่มสินค้าใหม่",
     popupform_title_update: "แก้ไขสินค้า",
-    signin_title: "Space Rantal",
+    signin_title: "Space Rental",
     signin_subtitle: "ยินดีตอนรับเข้าสู่ระบบ",
     signin_username: "ชื่อผู้ใช้",
     signin_password: "รหัสผ่าน",
@@ -47,15 +39,7 @@ const translations = {
 
   },
   en: {
-    product_title: "Product and Service",
-    product_mainpage: "Product",
-    product_keyword: "Code/Product Name",
-    product_button_create: "Add New",
-    product_table_code: "Code",
-    product_table_name1: "Name Thai",
-    product_table_name2: "Name English",
-    product_table_price: "Price/Unit",
-    price: "Price",
+
     status: "Status",
     createdate: "Create Date",
     createby: "Create by",
@@ -80,7 +64,7 @@ const translations = {
     cancel: "Cancel",
     popupform_title_addnew: "Add New",
     popupform_title_update: "Update",
-    signin_title: "Space Rantal",
+    signin_title: "Space Rental",
     signin_subtitle: "Sign in your account",
     signin_username: "Username",
     signin_password: "Password",

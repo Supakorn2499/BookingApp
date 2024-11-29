@@ -13,6 +13,7 @@ import Vattype from "./pages/Vattype";
 import Paytype from "./pages/Paytype";
 import Bank from "./pages/Bank";
 import ProdType from "./pages/ProductType";
+import BankBranch from "./pages/BankBranch";
 
 export default function App() {
   return (
@@ -32,6 +33,7 @@ export default function App() {
                 <Route path="Paytype" element={<Paytype />} />
                 <Route path="Bank" element={<Bank />} />
                 <Route path="ProdType" element={<ProdType />} />
+                <Route path="BankBranch" element={<BankBranch />} />
               </Route>
             </Route>
           </Routes>

@@ -101,12 +101,13 @@ namespace BookingApp.Server.Services
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
-            SELECT * 
-            FROM bankbranch
+            SELECT a.*,b.name1 as bankname  
+            FROM bankbranch a inner join bank b on a.bankid=b.id
             WHERE (@Keyword IS NULL OR 
-                   LOWER(name1) LIKE LOWER(@Keyword) OR 
-                   LOWER(name2) LIKE LOWER(@Keyword) OR 
-                   LOWER(code) LIKE LOWER(@Keyword))
+                   LOWER(b.name1) LIKE LOWER(@Keyword) OR
+                   LOWER(a.name1) LIKE LOWER(@Keyword) OR 
+                   LOWER(a.name2) LIKE LOWER(@Keyword) OR 
+                   LOWER(a.code) LIKE LOWER(@Keyword))
             ORDER BY id
             OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
 
