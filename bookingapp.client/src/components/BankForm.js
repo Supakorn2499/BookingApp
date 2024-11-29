@@ -29,6 +29,7 @@ const BankForm = ({ initialData, onSubmit, onCancel }) => {
       inactive: "ปิดใช้งาน",
       botcode: "BOTCODE",
       swicfcode: "SWICFCODE",
+      status: "สถานะ",
     },
     en: {
       code: "Code",
@@ -41,6 +42,7 @@ const BankForm = ({ initialData, onSubmit, onCancel }) => {
       inactive: "Inactive",
       botcode: "BOTCODE",
       swicfcode: "SWICFCODE",
+      status: "Status",
     },
   };
 
@@ -185,8 +187,8 @@ const BankForm = ({ initialData, onSubmit, onCancel }) => {
           {translation.status}
         </label>
         <select
-          id="status"
-          name="status"
+          id="active"
+          name="active"
           value={formData.active}
           onChange={handleActiveChange}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"

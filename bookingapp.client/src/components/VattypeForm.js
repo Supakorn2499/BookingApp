@@ -25,6 +25,7 @@ const VattypeForm = ({ initialData, onSubmit, onCancel }) => {
       remark: "หมายเหตุ",
       active: "เปิดใช้งาน",
       inactive: "ปิดใช้งาน",
+      status: "สถานะ",
     },
     en: {
       code: "Code",
@@ -35,6 +36,7 @@ const VattypeForm = ({ initialData, onSubmit, onCancel }) => {
       select: "Select...",
       active: "Active",
       inactive: "InActive",
+      status: "Status",
     },
   };
 
@@ -152,8 +154,8 @@ const VattypeForm = ({ initialData, onSubmit, onCancel }) => {
           {translation.status}
         </label>
         <select
-          id="status"
-          name="status"
+          id="active"
+          name="active"
           value={formData.active}
           onChange={handleActiveChange}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"

@@ -29,11 +29,11 @@ const ProductGroup = () => {
     th: {
       title: "กลุ่มสินค้า",
       navbar: "สินค้า",
-      keyword: "รหัสกลุ่มสินค้า/ชื่อกลุ่มสินค้า",
-      create: "เพิ่มกลุ่มสินค้าใหม่",
-      code: "รหัสกลุ่มสินค้า",
-      name1: "ชื่อกลุ่มสินค้าไทย",
-      name2: "ชื่อกลุ่มสินค้าอังกฤษ",
+      keyword: "รหัสกลุ่ม/ชื่อกลุ่ม",
+      create: "เพิ่มกลุ่มใหม่",
+      code: "รหัสกลุ่ม",
+      name1: "ชื่อกลุ่มไทย",
+      name2: "ชื่อกลุ่มอังกฤษ",
       active: "สถานะ",
       createdate: "วันที่สร้าง",
       createby: "สร้างโดย",
@@ -52,10 +52,10 @@ const ProductGroup = () => {
       loading: "กำลังโหลดข้อมูล...",
       nodata: "ไม่พบข้อมูล",
       confirmtitle: "ยืนยันการลบ",
-      confirm_msg: "คุณต้องการลบกลุ่มสินค้า",
+      confirm_msg: "คุณต้องการลบกลุ่ม",
       cancel: "ยกเลิก",
-      popupformtitle_addnew: "เพิ่มกลุ่มสินค้าใหม่",
-      popupformtitle_update: "แก้ไขกลุ่มสินค้า",
+      popupformtitle_addnew: "เพิ่มกลุ่มใหม่",
+      popupformtitle_update: "แก้ไขกลุ่ม",
       swal_title: "แจ้งเตือน",
       swal_failed_msg: "เกิดข้อผิดพลาด",
       swal_success_msg: "บันทึกข้อมูลสำเร็จ",
@@ -106,7 +106,7 @@ const ProductGroup = () => {
   const currentLanguage = translations[language] ? language : "th";
   const translation = translations[currentLanguage];
 
-  // ฟอร์มจัดการสินค้า
+  // ฟอร์มจัดการ
   const [formVisible, setFormVisible] = useState(false);
   const [formMode, setFormMode] = useState("add");
   const [formData, setFormData] = useState(null);
@@ -130,7 +130,7 @@ const ProductGroup = () => {
       setTotalPages(data.totalPages || 1);
       settotalRecords(data.totalRecords || 0);
     } catch (error) {
-      setErrorMessage("ไม่สามารถโหลดข้อมูลกลุ่มสินค้าได้");
+      setErrorMessage("ไม่สามารถโหลดข้อมูลกลุ่มได้");
       console.error("Error fetching products:", error);
     } finally {
       setIsLoading(false);

@@ -11,9 +11,9 @@ const PaytypeForm = ({ initialData, onSubmit, onCancel }) => {
     name2: "",
     code: "",
     active: "Y",
-    isdeposit: "",
-    iswithdraw: "",
-    group: "",
+    isdeposit: null,
+    iswithdraw: null,
+    group: null,
     inout: "",
   });
   const { language } = useOutletContext();
@@ -33,6 +33,11 @@ const PaytypeForm = ({ initialData, onSubmit, onCancel }) => {
       withdraw: "ถอนเงิน",
       group: "กลุ่ม",
       inout: "เข้า/ออก",
+      status: "สถานะ",
+      yes: "ใช่",
+      no: "ไม่ใช่",
+      in: "เข้า",
+      out: "ออก",
     },
     en: {
       code: "Code",
@@ -47,6 +52,11 @@ const PaytypeForm = ({ initialData, onSubmit, onCancel }) => {
       withdraw: "Withdraw",
       group: "Group",
       inout: "In/Out",
+      status: "Status",
+      yes: "Yes",
+      no: "No",
+      in: "IN",
+      out: "OUT",
     },
   };
 
@@ -65,8 +75,27 @@ const PaytypeForm = ({ initialData, onSubmit, onCancel }) => {
     },
   ];
 
+  const INOUT = [
+    {
+      id: 0,
+      code: "-",
+      name: "-",
+    },
+    {
+      id: 1,
+      code: "I",
+      name: translation.in,
+    },
+    {
+      id: 2,
+      code: "O",
+      name: translation.out,
+    },
+  ];
+
   // State สำหรับสถานะปัจจุบัน
   const [selectedStatus, setSelectedStatus] = useState(Status[0].code);
+  const [selectedINOUT, setSelectedINOUT] = useState(INOUT[0].code);
 
   useEffect(() => {
     const fetchDefaultValues = async () => {
@@ -75,6 +104,9 @@ const PaytypeForm = ({ initialData, onSubmit, onCancel }) => {
           // อัปเดต state ด้วยข้อมูลที่ดึงมา
           if (initialData && initialData.active) {
             setSelectedStatus(initialData.active);
+          }
+          if (initialData && initialData.inout) {
+            setSelectedINOUT(initialData.inout);
           }
           setFormData({
             id: initialData.id,
@@ -86,7 +118,7 @@ const PaytypeForm = ({ initialData, onSubmit, onCancel }) => {
             isdeposit: initialData.isdeposit,
             iswithdraw: initialData.iswithdraw,
             group: initialData.group,
-            inout: initialData.inout,
+            inout: selectedINOUT,
           });
         } catch (error) {
           console.error("Error fetching default values:", error);
@@ -95,7 +127,7 @@ const PaytypeForm = ({ initialData, onSubmit, onCancel }) => {
     };
 
     fetchDefaultValues();
-  }, [initialData, selectedStatus]);
+  }, [initialData, selectedStatus, selectedINOUT]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -105,6 +137,11 @@ const PaytypeForm = ({ initialData, onSubmit, onCancel }) => {
   const handleActiveChange = (e) => {
     const newStatus = e.target.value;
     setFormData((prev) => ({ ...prev, active: newStatus }));
+  };
+
+  const handleINOUTChange = (e) => {
+    const newINOUT = e.target.value;
+    setFormData((prev) => ({ ...prev, inout: newINOUT }));
   };
 
   const handleSubmit = (e) => {
@@ -162,53 +199,25 @@ const PaytypeForm = ({ initialData, onSubmit, onCancel }) => {
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
-      <div>
-        <label className="block p-1 text-sm font-medium text-gray-700">
-          {translation.deposit}
-        </label>
-        <input
-          type="text"
-          name="isdeposit"
-          value={formData.isdeposit}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        />
-      </div>
-      <div>
-        <label className="block p-1 text-sm font-medium text-gray-700">
-          {translation.withdraw}
-        </label>
-        <input
-          type="text"
-          name="iswithdraw"
-          value={formData.iswithdraw}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        />
-      </div>
-      <div>
-        <label className="block p-1 text-sm font-medium text-gray-700">
-          {translation.group}
-        </label>
-        <input
-          type="text"
-          name="group"
-          value={formData.group}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        />
-      </div>
+
+      {/* Dropdown สำหรับ INOUT */}
       <div>
         <label className="block p-1 text-sm font-medium text-gray-700">
           {translation.inout}
         </label>
-        <input
-          type="text"
+        <select
+          id="inout"
           name="inout"
           value={formData.inout}
-          onChange={handleChange}
+          onChange={handleINOUTChange}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        />
+        >
+          {INOUT.map((item) => (
+            <option key={item.id} value={item.code}>
+              {item.name}
+            </option>
+          ))}
+        </select>
       </div>
       {/* Dropdown สำหรับ Status */}
       <div>
@@ -216,8 +225,8 @@ const PaytypeForm = ({ initialData, onSubmit, onCancel }) => {
           {translation.status}
         </label>
         <select
-          id="status"
-          name="status"
+          id="active"
+          name="active"
           value={formData.active}
           onChange={handleActiveChange}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -229,6 +238,7 @@ const PaytypeForm = ({ initialData, onSubmit, onCancel }) => {
           ))}
         </select>
       </div>
+
       <div className="flex justify-end mt-4">
         <button
           type="button"

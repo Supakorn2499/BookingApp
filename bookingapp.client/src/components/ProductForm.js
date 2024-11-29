@@ -22,14 +22,14 @@ const ProductForm = ({ initialData, onSubmit, onCancel }) => {
   // แปลภาษา
   const translations = {
     th: {
-      code: "รหัสสินค้า",
-      name1: "ชื่อสินค้าไทย",
-      name2: "ชื่อสินค้าอังกฤษ",
+      code: "รหัส",
+      name1: "ชื่อไทย",
+      name2: "ชื่ออังกฤษ",
       price: "ราคา",
       status: "สถานะ",
       unitname: "หน่วย",
-      prodtype: "ประเภทสินค้า",
-      prodgroup: "กลุ่มสินค้า",
+      prodtype: "ประเภท",
+      prodgroup: "กลุ่ม",
       vattype: "ประเภทภาษี",
       cancel: "ยกเลิก",
       save: "บันทึก",

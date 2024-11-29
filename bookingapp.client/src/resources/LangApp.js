@@ -40,7 +40,7 @@ const translations = {
     signin_button_login: "เข้าสู่ระบบ",
     signin_remember: "จดจำรหัสผ่าน",
     signin_forgot_password: "ลืมระหัสผ่าน",
-    signin_failed_title: "แจ้งเตื่อน",
+    signin_failed_title: "แจ้งเตือน",
     signin_failed_msg: "ไม่สามารถเข้าระบบได้ตรวจสอบรหัสผ่านอีกครั้ง",
     language_text: "เปลี่ยนภาษา :",
     button_close: "ปิด",

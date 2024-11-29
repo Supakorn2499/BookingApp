@@ -16,15 +16,16 @@ const ProductGroupForm = ({ initialData, onSubmit, onCancel }) => {
   // แปลภาษา
   const translations = {
     th: {
-      code: "รหัสกลุ่มสินค้า",
-      name1: "ชื่อกลุ่มสินค้าไทย",
-      name2: "ชื่อกลุ่มสินค้าอังกฤษ",
+      code: "รหัสกลุ่ม",
+      name1: "ชื่อกลุ่มไทย",
+      name2: "ชื่อกลุ่มอังกฤษ",
       cancel: "ยกเลิก",
       save: "บันทึก",
       select: "เลือก...",
       remark: "หมายเหตุ",
       active: "เปิดใช้งาน",
       inactive: "ปิดใช้งาน",
+      status:"สถานะ",
     },
     en: {
       code: "Code",
@@ -35,6 +36,7 @@ const ProductGroupForm = ({ initialData, onSubmit, onCancel }) => {
       select: "Select...",
       active: "Active",
       inactive: "InActive",
+      status: "Status",
     },
   };
 
@@ -79,7 +81,7 @@ const ProductGroupForm = ({ initialData, onSubmit, onCancel }) => {
     };
 
     fetchDefaultValues();
-  }, [initialData,selectedStatus]);
+  }, [initialData, selectedStatus]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -152,8 +154,8 @@ const ProductGroupForm = ({ initialData, onSubmit, onCancel }) => {
           {translation.status}
         </label>
         <select
-          id="status"
-          name="status"
+          id="active"
+          name="active"
           value={formData.active}
           onChange={handleActiveChange}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"

@@ -27,13 +27,13 @@ const Product = () => {
   // แปลภาษา
   const translations = {
     th: {
-      title: "สินค้าและบริการ",
+      title: "ข้อมูลสินค้า",
       navbar: "สินค้า",
-      keyword: "รหัสสินค้า/ชื่อสินค้า",
-      create: "เพิ่มสินค้าใหม่",
-      code: "รหัสสินค้า",
-      name1: "ชื่อสินค้าไทย",
-      name2: "ชื่อสินค้าอังกฤษ",
+      keyword: "ค้นหาด้วยรหัส/ชื่อ",
+      create: "เพิ่มใหม่",
+      code: "รหัส",
+      name1: "ชื่อไทย",
+      name2: "ชื่ออังกฤษ",
       price: "ราคา",
       active: "สถานะ",
       createdate: "วันที่สร้าง",
@@ -54,10 +54,10 @@ const Product = () => {
       loading: "กำลังโหลดข้อมูล...",
       nodata: "ไม่พบข้อมูล",
       confirmtitle: "ยืนยันการลบ",
-      confirm_msg: "คุณต้องการลบสินค้า",
+      confirm_msg: "คุณต้องการลบ",
       cancel: "ยกเลิก",
-      popupformtitle_addnew: "เพิ่มสินค้าใหม่",
-      popupformtitle_update: "แก้ไขสินค้า",
+      popupformtitle_addnew: "เพิ่มใหม่",
+      popupformtitle_update: "แก้ไข",
       swal_title: "แจ้งเตือน",
       swal_failed_msg: "เกิดข้อผิดพลาด",
       swal_success_msg: "บันทึกข้อมูลสำเร็จ",
@@ -93,12 +93,12 @@ const Product = () => {
       loading: "Loading...",
       nodata: "Data not found.",
       confirmtitle: "Confirmation",
-      confirm_msg: "You want to delete the product.",
+      confirm_msg: "You want to delete",
       cancel: "Cancel",
-      popupformtitle_addnew: "Add New Product",
-      popupformtitle_update: "Update Product",
+      popupformtitle_addnew: "Add New",
+      popupformtitle_update: "Update",
       swal_title: "Information",
-      swal_failed_msg: "Failed to create product. Please try again.",
+      swal_failed_msg: "Failed to create data. Please try again.",
       swal_success_msg: "Product created successfully!",
       swal_button_clsoe: "Close",
       swal_button_ok: "Ok",
@@ -109,7 +109,7 @@ const Product = () => {
   const currentLanguage = translations[language] ? language : "th";
   const translation = translations[currentLanguage];
 
-  // ฟอร์มจัดการสินค้า
+  // ฟอร์มจัดการ
   const [formVisible, setFormVisible] = useState(false);
   const [formMode, setFormMode] = useState("add");
   const [formData, setFormData] = useState(null);
@@ -133,7 +133,7 @@ const Product = () => {
       setTotalPages(data.totalPages || 1);
       settotalRecords(data.totalRecords || 0);
     } catch (error) {
-      setErrorMessage("ไม่สามารถโหลดข้อมูลสินค้าได้");
+      setErrorMessage("ไม่สามารถโหลดข้อมูลได้");
       console.error("Error fetching products:", error);
     } finally {
       setIsLoading(false);

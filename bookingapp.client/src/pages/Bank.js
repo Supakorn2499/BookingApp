@@ -188,7 +188,7 @@ const Bank = () => {
   // แก้ไขข้อมูล
   const handleEdit  = async (formData) => {
     try {
-      //console.log(JSON.stringify(formData));
+      console.log(JSON.stringify(formData));
       const response = await api.put(
         "/Bank/Update?id=" + formData.id,
         JSON.stringify(formData),

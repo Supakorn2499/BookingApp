@@ -143,7 +143,7 @@ const App = () => {
       key: "bank",
       name: t.bank,
       href: "/bank",
-      initial: "P",
+      initial: "B",
       current: false,
     },
     {
