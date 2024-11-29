@@ -19,6 +19,7 @@ const translations = {
       vattype:"ประเภทภาษี",
       paytype: "ประเภทชำระ",
       bank: "ธนาคาร",
+      prodtype: "ประเภทสินค้า",
     },
     en: {
       dashboard: "Dashboard",
@@ -40,6 +41,7 @@ const translations = {
       vattype:"Vattype",
       paytype: "Paytype",
       bank: "Bank",
+      prodtype: "Product Type",
     },
   };
   

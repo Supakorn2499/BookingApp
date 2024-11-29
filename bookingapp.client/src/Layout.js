@@ -137,9 +137,16 @@ const App = () => {
       href: "/vattype",
       initial: "V",
       current: false,
+    },{
+      id: 6,
+      key: "prodtype",
+      name: t.prodtype,
+      href: "/prodtype",
+      initial: "T",
+      current: false,
     },
     {
-      id: 6,
+      id: 7,
       key: "bank",
       name: t.bank,
       href: "/bank",
@@ -147,7 +154,7 @@ const App = () => {
       current: false,
     },
     {
-      id: 7,
+      id: 8,
       key: "paytype",
       name: t.paytype,
       href: "/paytype",
