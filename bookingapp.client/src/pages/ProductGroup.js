@@ -33,7 +33,7 @@ const ProductGroup = () => {
       create: "เพิ่มกลุ่มสินค้าใหม่",
       code: "รหัสกลุ่มสินค้า",
       name1: "ชื่อกลุ่มสินค้าไทย",
-      name2: "ชื่อกลุ่มสินค้าอังกฤษ",      
+      name2: "ชื่อกลุ่มสินค้าอังกฤษ",
       active: "สถานะ",
       createdate: "วันที่สร้าง",
       createby: "สร้างโดย",
@@ -189,7 +189,7 @@ const ProductGroup = () => {
   // แก้ไขข้อมูล
   const handleEditProduct = async (formData) => {
     try {
-      console.log(JSON.stringify(formData));
+      //console.log(JSON.stringify(formData));
       const response = await api.put(
         "/ProdGroup/Update?id=" + formData.id,
         JSON.stringify(formData),
@@ -305,7 +305,7 @@ const ProductGroup = () => {
                 type="text"
                 placeholder={translation.keyword}
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.targetranslation.value)}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm/6"
               />
             </div>
@@ -436,7 +436,7 @@ const ProductGroup = () => {
                           name1: product.name1,
                           name2: product.name2,
                           code: product.code,
-                          active: product.active
+                          active: product.active,
                         });
                         setFormVisible(true);
                       }}

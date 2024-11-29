@@ -1,59 +1,52 @@
-import React, { startTransition, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import AsyncSelect from "react-select/async";
 import api from "../pages/apiConfig";
 import { useOutletContext } from "react-router-dom";
 
-const ProductForm = ({ initialData, onSubmit, onCancel }) => {
+const PaytypeForm = ({ initialData, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({
     id: 0,
     companyid: 1,
-    productgroupid: 1,
     name1: "",
     name2: "",
     code: "",
-    prodtype: 1,
-    vattype: 1,
-    saleprice: 0,
-    unitname: "",
-    remark: "",
-    active: "",
+    active: "Y",
+    isdeposit: "",
+    iswithdraw: "",
+    group: "",
+    inout: "",
   });
   const { language } = useOutletContext();
   // แปลภาษา
   const translations = {
     th: {
-      code: "รหัสสินค้า",
-      name1: "ชื่อสินค้าไทย",
-      name2: "ชื่อสินค้าอังกฤษ",
-      price: "ราคา",
-      status: "สถานะ",
-      unitname: "หน่วย",
-      prodtype: "ประเภทสินค้า",
-      prodgroup: "กลุ่มสินค้า",
-      vattype: "ประเภทภาษี",
+      code: "รหัส",
+      name1: "ชื่อไทย",
+      name2: "ชื่ออังกฤษ",
       cancel: "ยกเลิก",
       save: "บันทึก",
       select: "เลือก...",
       remark: "หมายเหตุ",
       active: "เปิดใช้งาน",
       inactive: "ปิดใช้งาน",
+      deposit: "ฝากเงิน",
+      withdraw: "ถอนเงิน",
+      group: "กลุ่ม",
+      inout: "เข้า/ออก",
     },
     en: {
       code: "Code",
       name1: "Name (Thail)",
       name2: "Name (English)",
-      price: "Price",
-      status: "Status",
-      unitname: "UnitName",
-      prodtype: "Product Type",
-      prodgroup: "Product Group",
-      vattype: "VAT",
       cancel: "Cancel",
       save: "Save",
       select: "Select...",
-      remark: "Remark",
       active: "Active",
       inactive: "InActive",
+      deposit: "Deposit",
+      withdraw: "Withdraw",
+      group: "Group",
+      inout: "In/Out",
     },
   };
 
@@ -75,59 +68,25 @@ const ProductForm = ({ initialData, onSubmit, onCancel }) => {
   // State สำหรับสถานะปัจจุบัน
   const [selectedStatus, setSelectedStatus] = useState(Status[0].code);
 
-  // อัปเดต selectedStatus เมื่อ initialData มีค่า active ใหม่
-  useEffect(() => {
-    if (initialData && initialData.active) {
-      setSelectedStatus(initialData.active);
-    }
-  }, [initialData]);
-
   useEffect(() => {
     const fetchDefaultValues = async () => {
       if (initialData) {
         try {
-          // ดึงข้อมูลชื่อจาก API เพื่อเติมใน dropdown
-          const fetchOptionId = async (endpoint, id) => {
-            const response = await api.get(`/${endpoint}${id}`);
-
-            return {
-              value: response.data.id,
-              label: response.data.name1,
-            };
-          };
-
-          // console.log("prodtype", initialData.prodtype);
-          const prodtype = initialData.prodtype
-            ? await fetchOptionId("ProdType/GetById?id=", initialData.prodtype)
-            : null;
-
-          // console.log("productgroupid", initialData.productgroupid);
-          const productgroupid = initialData.productgroupid
-            ? await fetchOptionId(
-                "ProdGroup/GetById?id=",
-                initialData.productgroupid
-              )
-            : null;
-          // console.log("vattype", initialData.vattype);
-          const vattype = initialData.vattype
-            ? await fetchOptionId("Vattype/GetById?id=", initialData.vattype)
-            : null;
-
           // อัปเดต state ด้วยข้อมูลที่ดึงมา
-
+          if (initialData && initialData.active) {
+            setSelectedStatus(initialData.active);
+          }
           setFormData({
             id: initialData.id,
+            code: initialData.code,
             companyid: 1,
-            productgroupid: productgroupid,
             name1: initialData.name1,
             name2: initialData.name2,
-            code: initialData.code,
-            prodtype: prodtype,
-            vattype: vattype,
             active: selectedStatus,
-            saleprice: initialData.saleprice,
-            unitname: initialData.unitname,
-            remark: initialData.remark,
+            isdeposit: initialData.isdeposit,
+            iswithdraw: initialData.iswithdraw,
+            group: initialData.group,
+            inout: initialData.inout,
           });
         } catch (error) {
           console.error("Error fetching default values:", error);
@@ -143,11 +102,6 @@ const ProductForm = ({ initialData, onSubmit, onCancel }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSelectChange = (name, selectedOption) => {
-    console.log(name, selectedOption);
-    setFormData((prev) => ({ ...prev, [name]: selectedOption }));
-  };
-
   const handleActiveChange = (e) => {
     const newStatus = e.target.value;
     setFormData((prev) => ({ ...prev, active: newStatus }));
@@ -157,38 +111,16 @@ const ProductForm = ({ initialData, onSubmit, onCancel }) => {
     e.preventDefault();
     const outputData = {
       ...formData,
-      prodtype: formData.prodtype?.value || null,
-      productgroupid: formData.productgroupid?.value || null,
-      vattype: formData.vattype?.value || null,
     };
     onSubmit(outputData);
   };
 
+  // ปุ่มยกเลิก
   const handleCancel = (e) => {
     onCancel(false);
   };
+
   const isEditing = Boolean(initialData);
-
-  // ฟังก์ชันสำหรับดึงข้อมูลแบบ Async
-  const loadOptions = async (endpoint, inputValue) => {
-    try {
-      const response = await api.get(`/${endpoint}/Search`, {
-        params: {
-          pageNumber: 1,
-          pageSize: 20,
-          keyword: inputValue,
-        },
-      });
-
-      return response.data.data.map((item) => ({
-        value: item.id,
-        label: item.name1,
-      }));
-    } catch (error) {
-      console.error(`Error fetching ${endpoint} options:`, error);
-      return [];
-    }
-  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -232,76 +164,50 @@ const ProductForm = ({ initialData, onSubmit, onCancel }) => {
       </div>
       <div>
         <label className="block p-1 text-sm font-medium text-gray-700">
-          {translation.price}
-        </label>
-        <input
-          type="number"
-          name="saleprice"
-          value={formData.saleprice}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        />
-      </div>
-      <div>
-        <label className="block p-1 text-sm font-medium text-gray-700">
-          {translation.unitname}
+          {translation.deposit}
         </label>
         <input
           type="text"
-          name="unitname"
-          value={formData.unitname}
+          name="isdeposit"
+          value={formData.isdeposit}
           onChange={handleChange}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
-      {/* Dropdown สำหรับ ProdType */}
       <div>
         <label className="block p-1 text-sm font-medium text-gray-700">
-          {translation.prodtype}
+          {translation.withdraw}
         </label>
-        <AsyncSelect
-          placeholder={translation.select}
-          cacheOptions
-          loadOptions={(inputValue) => loadOptions("ProdType", inputValue)}
-          defaultOptions
-          value={formData.prodtype}
-          onChange={(selectedOption) =>
-            handleSelectChange("prodtype", selectedOption)
-          }
+        <input
+          type="text"
+          name="iswithdraw"
+          value={formData.iswithdraw}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
-
-      {/* Dropdown สำหรับ ProductGroup */}
       <div>
         <label className="block p-1 text-sm font-medium text-gray-700">
-          {translation.prodgroup}
+          {translation.group}
         </label>
-        <AsyncSelect
-          placeholder={translation.select}
-          cacheOptions
-          loadOptions={(inputValue) => loadOptions("ProdGroup", inputValue)}
-          defaultOptions
-          value={formData.productgroupid}
-          onChange={(selectedOption) =>
-            handleSelectChange("productgroupid", selectedOption)
-          }
+        <input
+          type="text"
+          name="group"
+          value={formData.group}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
-
-      {/* Dropdown สำหรับ VatType */}
       <div>
         <label className="block p-1 text-sm font-medium text-gray-700">
-          {translation.vattype}
+          {translation.inout}
         </label>
-        <AsyncSelect
-          placeholder={translation.select}
-          cacheOptions
-          loadOptions={(inputValue) => loadOptions("Vattype", inputValue)}
-          defaultOptions
-          value={formData.vattype}
-          onChange={(selectedOption) =>
-            handleSelectChange("vattype", selectedOption)
-          }
+        <input
+          type="text"
+          name="inout"
+          value={formData.inout}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
       {/* Dropdown สำหรับ Status */}
@@ -323,18 +229,6 @@ const ProductForm = ({ initialData, onSubmit, onCancel }) => {
           ))}
         </select>
       </div>
-      <div>
-        <label className="block p-1 text-sm font-medium text-gray-700">
-          {translation.remark}
-        </label>
-        <textarea
-          name="remark"
-          value={formData.remark}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        ></textarea>
-      </div>
-
       <div className="flex justify-end mt-4">
         <button
           type="button"
@@ -354,4 +248,4 @@ const ProductForm = ({ initialData, onSubmit, onCancel }) => {
   );
 };
 
-export default ProductForm;
+export default PaytypeForm;

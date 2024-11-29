@@ -10,6 +10,8 @@ import { LanguageProvider } from "./LanguageContext";
 import { AuthProvider } from "./AuthContext";
 import ProtectedRoute from "./ProtectedRoute";
 import Vattype from "./pages/Vattype";
+import Paytype from "./pages/Paytype";
+import Bank from "./pages/Bank";
 
 export default function App() {
   return (
@@ -26,6 +28,8 @@ export default function App() {
                 <Route path="product" element={<Product />} />
                 <Route path="productgroup" element={<ProductGroup />} />
                 <Route path="Vattype" element={<Vattype />} />
+                <Route path="Paytype" element={<Paytype />} />
+                <Route path="Bank" element={<Bank />} />
               </Route>
             </Route>
           </Routes>

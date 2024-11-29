@@ -7,12 +7,12 @@ import {
 } from "@heroicons/react/20/solid";
 import { formatDateTime, formatNumber } from "./Utilitys";
 import { Link, useLocation } from "react-router-dom";
-import ProductForm from "../components/ProductForm.js";
+import VattypeForm from "../components/VattypeForm.js";
 import { useOutletContext } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Vatttype = () => {
-  const [products, setProducts] = useState([]);
+  const [data, setDatas] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -29,16 +29,14 @@ const Vatttype = () => {
     th: {
       title: "ประเภทภาษี",
       navbar: "สินค้า",
-      keyword: "รหัสกลุ่มสินค้า/ชื่อกลุ่มสินค้า",
-      create: "เพิ่มกลุ่มสินค้าใหม่",
-      code: "รหัสกลุ่มสินค้า",
-      name1: "ชื่อกลุ่มสินค้าไทย",
-      name2: "ชื่อกลุ่มสินค้าอังกฤษ",
-      price: "ราคา",
-      active: "สถานะ",
+      keyword: "ค้นหาด้วยรหัส/ชื่อ",
+      create: "เพิ่มใหม่",
+      code: "รหัส",
+      name1: "ชื่อไทย",
+      name2: "ชื่ออังกฤษ",
+      status: "สถานะ",
       createdate: "วันที่สร้าง",
       createby: "สร้างโดย",
-      unitname: "หน่วย",
       delete: "ลบ",
       update: "แก้ไข",
       firstpage: "หน้าแรก",
@@ -54,10 +52,10 @@ const Vatttype = () => {
       loading: "กำลังโหลดข้อมูล...",
       nodata: "ไม่พบข้อมูล",
       confirmtitle: "ยืนยันการลบ",
-      confirm_msg: "คุณต้องการลบกลุ่มสินค้า",
+      confirm_msg: "คุณต้องการลบข้อมูล ",
       cancel: "ยกเลิก",
-      popupformtitle_addnew: "เพิ่มกลุ่มสินค้าใหม่",
-      popupformtitle_update: "แก้ไขกลุ่มสินค้า",
+      popupformtitle_addnew: "เพิ่มใหม่",
+      popupformtitle_update: "แก้ไข",
       swal_title: "แจ้งเตือน",
       swal_failed_msg: "เกิดข้อผิดพลาด",
       swal_success_msg: "บันทึกข้อมูลสำเร็จ",
@@ -66,18 +64,16 @@ const Vatttype = () => {
       swal_button_cancel: "ยกเลิก",
     },
     en: {
-      title: "Product Group",
+      title: "Vattype",
       navbar: "Product",
       keyword: "Code/Name",
       create: "Add New",
       code: "Code",
       name1: "Name (Thail)",
       name2: "Name (English)",
-      price: "Price",
-      active: "Status",
+      status: "Status",
       createdate: "Create Date",
       createby: "Create by",
-      unitname: "Unit",
       delete: "Delete",
       update: "Update",
       firstpage: "Home",
@@ -93,13 +89,13 @@ const Vatttype = () => {
       loading: "Loading...",
       nodata: "Data not found.",
       confirmtitle: "Confirmation",
-      confirm_msg: "You want to delete the product group.",
+      confirm_msg: "You want to delete ",
       cancel: "Cancel",
-      popupformtitle_addnew: "Add New Product Group",
-      popupformtitle_update: "Update Product Group",
+      popupformtitle_addnew: "Add New",
+      popupformtitle_update: "Update",
       swal_title: "Information",
-      swal_failed_msg: "Failed to create product Group. Please try again.",
-      swal_success_msg: "Product created successfully!",
+      swal_failed_msg: "Failed to create data. Please try again.",
+      swal_success_msg: "successfully!",
       swal_button_clsoe: "Close",
       swal_button_ok: "Ok",
       swal_button_cancel: "Cancel",
@@ -109,7 +105,7 @@ const Vatttype = () => {
   const currentLanguage = translations[language] ? language : "th";
   const translation = translations[currentLanguage];
 
-  // ฟอร์มจัดการสินค้า
+  // ฟอร์มจัดการข้อมูล
   const [formVisible, setFormVisible] = useState(false);
   const [formMode, setFormMode] = useState("add");
   const [formData, setFormData] = useState(null);
@@ -117,7 +113,7 @@ const Vatttype = () => {
   const ITEMS_PER_PAGE = 15;
 
   // ค้นหาข้อมูล
-  const fetchProducts = async (pageNumber, search = "") => {
+  const fetchDatas = async (pageNumber, search = "") => {
     setIsLoading(true);
     setErrorMessage("");
     try {
@@ -129,12 +125,12 @@ const Vatttype = () => {
         },
       });
 
-      setProducts(data.data || []);
+      setDatas(data.data || []);
       setTotalPages(data.totalPages || 1);
       settotalRecords(data.totalRecords || 0);
     } catch (error) {
       setErrorMessage("ไม่สามารถโหลดข้อมูลกลุ่มสินค้าได้");
-      console.error("Error fetching products:", error);
+      console.error("Error fetching data:", error);
     } finally {
       setIsLoading(false);
     }
@@ -142,7 +138,7 @@ const Vatttype = () => {
 
   // Monitor การเปลี่ยนแปลงการคีย์ค้นหาข้อมูล
   useEffect(() => {
-    fetchProducts(page, searchTerm.trim());
+    fetchDatas(page, searchTerm.trim());
   }, [page, searchTerm]);
 
   const handleResetSearch = () => {
@@ -160,7 +156,7 @@ const Vatttype = () => {
   };
 
   //เพิ่มข้อมูลใหม่
-  const handleCreateProduct = async (formData) => {
+  const handleCreate  = async (formData) => {
     console.log(JSON.stringify(formData));
     try {
       const response = await api.post(
@@ -169,7 +165,7 @@ const Vatttype = () => {
         { headers: { "Content-Type": "application/json" } }
       );
     } catch (error) {
-      console.error("Error updating product:", error);
+      console.error("Error updating  :", error);
       Swal.fire({
         icon: "error",
         title: translation.swal_failed_title,
@@ -177,7 +173,7 @@ const Vatttype = () => {
         confirmButtonText: translation.swal_button_clsoe,
       });
     } finally {
-      fetchProducts(page, searchTerm.trim());
+      fetchDatas(page, searchTerm.trim());
       handleClosForm(false);
       setFormData(null);
       Swal.fire({
@@ -190,7 +186,7 @@ const Vatttype = () => {
   };
 
   // แก้ไขข้อมูล
-  const handleEditProduct = async (formData) => {
+  const handleEdit  = async (formData) => {
     try {
       //console.log(JSON.stringify(formData));
       const response = await api.put(
@@ -199,7 +195,7 @@ const Vatttype = () => {
         { headers: { "Content-Type": "application/json" } }
       );
     } catch (error) {
-      console.error("Error updating product:", error);
+      console.error("Error updating  :", error);
       Swal.fire({
         icon: "error",
         title: translation.swal_failed_title,
@@ -207,7 +203,7 @@ const Vatttype = () => {
         confirmButtonText: translation.swal_button_clsoe,
       });
     } finally {
-      fetchProducts(page, searchTerm.trim());
+      fetchDatas(page, searchTerm.trim());
       handleClosForm(false);
       setFormData(null);
       Swal.fire({
@@ -223,14 +219,20 @@ const Vatttype = () => {
   const handleDelete = async () => {
     try {
       await api.delete(`/Vattype/Delete/?id=${deleteId}`);
-      setProducts((prev) => prev.filter((product) => product.id !== deleteId));
+      setDatas((prev) => prev.filter((data) => data.id !== deleteId));
     } catch (error) {
-      console.error("Error deleting product group:", error);
+      console.error("Error deleting data:", error);
     } finally {
       setPopupVisible(false);
       setDeleteId(null);
       setDeleteName(null);
       handleResetSearch();
+      Swal.fire({
+        icon: "success",
+        title: translation.swal_success_title,
+        text: translation.swal_success_msg,
+        confirmButtonText: translation.swal_button_clsoe,
+      });
     }
   };
 
@@ -302,7 +304,7 @@ const Vatttype = () => {
                 type="text"
                 placeholder={translation.keyword}
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.targetranslation.value)}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm/6"
               />
             </div>
@@ -329,7 +331,7 @@ const Vatttype = () => {
         <p className="text-center">{translation.loading}</p>
       ) : errorMessage ? (
         <p className="text-center text-red-500">{errorMessage}</p>
-      ) : products.length === 0 ? (
+      ) : data.length === 0 ? (
         <div className="mt-2 ring-1 ring-gray-300 sm:mx-0 sm:rounded-sm">
           <table className="min-w-full divide-y  divide-gray-300">
             <thead>
@@ -395,27 +397,27 @@ const Vatttype = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
-              {products.map((product) => (
-                <tr key={product.id} className="divide-x divide-gray-200">
+              { data.map((d) => (
+                <tr key={d.id} className="divide-x divide-gray-200">
                   <td className="whitespace-nowrap p-1 text-sm font-medium text-gray-900 ">
-                    {product.code}
+                    {d.code}
                   </td>
                   <td className="whitespace-nowrap p-1 text-sm text-gray-600">
-                    {product.name1}
+                    { d.name1}
                   </td>
                   <td className="whitespace-nowrap p-1 text-sm text-gray-600">
-                    {product.name2}
+                    { d.name2}
                   </td>
                   <td className="whitespace-nowrap p-1 text-sm text-center text-gray-600">
-                    {product.active === "Y" ? "Active" : "Inactive"}
+                    { d.active === "Y" ? "Active" : "Inactive"}
                   </td>
                   <td className="whitespace-nowrap p-1 text-sm text-center text-gray-600">
                     <button
                       className="text-red-500 font-semibold"
                       onClick={() =>
                         confirmDelete(
-                          product.id,
-                          product.code + " : " + product.name1
+                           d.id,
+                           d.code + " : " +  d.name1
                         )
                       }
                     >
@@ -428,11 +430,12 @@ const Vatttype = () => {
                       onClick={() => {
                         setFormMode("edit");
                         setFormData({
-                          id: product.id,
+                          id:  d.id,
                           companyid: 1,
-                          name1: product.name1,
-                          name2: product.name2,
-                          code: product.code,
+                          name1:  d.name1,
+                          name2:  d.name2,
+                          code: d.code,
+                          active: d.active
                         });
                         setFormVisible(true);
                       }}
@@ -521,16 +524,16 @@ const Vatttype = () => {
                 : translation.popupformtitle_update}
             </h2>
             {formMode === "add" ? (
-              <ProductForm
+              <VattypeForm
                 initialData={null}
-                onSubmit={handleCreateProduct}
+                onSubmit={handleCreate}
                 onCancel={handleClosForm}
                 language
               />
             ) : (
-              <ProductForm
+              <VattypeForm
                 initialData={formData}
-                onSubmit={handleEditProduct}
+                onSubmit={handleEdit}
                 onCancel={handleClosForm}
                 language
               />

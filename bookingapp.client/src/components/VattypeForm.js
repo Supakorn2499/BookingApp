@@ -3,7 +3,7 @@ import AsyncSelect from "react-select/async";
 import api from "../pages/apiConfig";
 import { useOutletContext } from "react-router-dom";
 
-const ProductGroupForm = ({ initialData, onSubmit, onCancel }) => {
+const VattypeForm = ({ initialData, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({
     id: 0,
     companyid: 1,
@@ -16,9 +16,9 @@ const ProductGroupForm = ({ initialData, onSubmit, onCancel }) => {
   // แปลภาษา
   const translations = {
     th: {
-      code: "รหัสกลุ่มสินค้า",
-      name1: "ชื่อกลุ่มสินค้าไทย",
-      name2: "ชื่อกลุ่มสินค้าอังกฤษ",
+      code: "รหัส",
+      name1: "ชื่อไทย",
+      name2: "ชื่ออังกฤษ",
       cancel: "ยกเลิก",
       save: "บันทึก",
       select: "เลือก...",
@@ -184,4 +184,4 @@ const ProductGroupForm = ({ initialData, onSubmit, onCancel }) => {
   );
 };
 
-export default ProductGroupForm;
+export default VattypeForm;

@@ -3,7 +3,7 @@ import AsyncSelect from "react-select/async";
 import api from "../pages/apiConfig";
 import { useOutletContext } from "react-router-dom";
 
-const ProductGroupForm = ({ initialData, onSubmit, onCancel }) => {
+const BankForm = ({ initialData, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({
     id: 0,
     companyid: 1,
@@ -11,20 +11,24 @@ const ProductGroupForm = ({ initialData, onSubmit, onCancel }) => {
     name2: "",
     code: "",
     active: "Y",
+    botcode: "",
+    swicfcode: "",
   });
   const { language } = useOutletContext();
   // แปลภาษา
   const translations = {
     th: {
-      code: "รหัสกลุ่มสินค้า",
-      name1: "ชื่อกลุ่มสินค้าไทย",
-      name2: "ชื่อกลุ่มสินค้าอังกฤษ",
+      code: "รหัส",
+      name1: "ชื่อไทย",
+      name2: "ชื่ออังกฤษ",
       cancel: "ยกเลิก",
       save: "บันทึก",
       select: "เลือก...",
       remark: "หมายเหตุ",
       active: "เปิดใช้งาน",
       inactive: "ปิดใช้งาน",
+      botcode: "BOTCODE",
+      swicfcode: "SWICFCODE",
     },
     en: {
       code: "Code",
@@ -34,7 +38,9 @@ const ProductGroupForm = ({ initialData, onSubmit, onCancel }) => {
       save: "Save",
       select: "Select...",
       active: "Active",
-      inactive: "InActive",
+      inactive: "Inactive",
+      botcode: "BOTCODE",
+      swicfcode: "SWICFCODE",
     },
   };
 
@@ -71,6 +77,8 @@ const ProductGroupForm = ({ initialData, onSubmit, onCancel }) => {
             name1: initialData.name1,
             name2: initialData.name2,
             active: selectedStatus,
+            botcode: initialData.botcode,
+            swicfcode: initialData.swicfcode,
           });
         } catch (error) {
           console.error("Error fetching default values:", error);
@@ -79,7 +87,7 @@ const ProductGroupForm = ({ initialData, onSubmit, onCancel }) => {
     };
 
     fetchDefaultValues();
-  }, [initialData,selectedStatus]);
+  }, [initialData, selectedStatus]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -146,6 +154,31 @@ const ProductGroupForm = ({ initialData, onSubmit, onCancel }) => {
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
+      <div>
+        <label className="block p-1 text-sm font-medium text-gray-700">
+          {translation.botcode}
+        </label>
+        <input
+          type="text"
+          name="botcode"
+          value={formData.botcode}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+      </div>
+      <div>
+        <label className="block p-1 text-sm font-medium text-gray-700">
+          {translation.swicfcode}
+        </label>
+        <input
+          type="text"
+          name="swicfcode"
+          value={formData.swicfcode}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+      </div>
+
       {/* Dropdown สำหรับ Status */}
       <div>
         <label className="block p-1 text-sm font-medium text-gray-700">
@@ -184,4 +217,4 @@ const ProductGroupForm = ({ initialData, onSubmit, onCancel }) => {
   );
 };
 
-export default ProductGroupForm;
+export default BankForm;

@@ -4,6 +4,8 @@
     {
         public int id { get; set; }
         public int? companyid { get; set; }
+        public string botcode { get; set; }
+        public string swicfcode { get; set; }
         public string code { get; set; }
         public string name1 { get; set; }
         public string name2 { get; set; }

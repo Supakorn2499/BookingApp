@@ -131,11 +131,27 @@ const App = () => {
       current: false,
     },
     {
-      id: 4,
+      id: 5,
       key: "vattype",
       name: t.vattype,
       href: "/vattype",
       initial: "V",
+      current: false,
+    },
+    {
+      id: 6,
+      key: "bank",
+      name: t.bank,
+      href: "/bank",
+      initial: "P",
+      current: false,
+    },
+    {
+      id: 7,
+      key: "paytype",
+      name: t.paytype,
+      href: "/paytype",
+      initial: "P",
       current: false,
     },
   ];

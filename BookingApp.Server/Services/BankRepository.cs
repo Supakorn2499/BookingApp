@@ -21,8 +21,8 @@ namespace BookingApp.Server.Services
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
-                INSERT INTO bank (companyid,code, name1,name2, active,inactivedate,createby, createatutc) 
-                VALUES (@companyid,@code, @name1,@name2, @active,@inactivedate,@createby, @createatutc)
+                INSERT INTO bank (companyid,code, name1,name2, active,inactivedate,botcode,swicfcode,createby, createatutc) 
+                VALUES (@companyid,@code, @name1,@name2, @active,@inactivedate,@botcode,@swicfcode,@createby, @createatutc)
                 RETURNING id;";
 
                 if (bank.active == "Y")
@@ -38,6 +38,8 @@ namespace BookingApp.Server.Services
                     active = bank.active,
                     inactivedate = bank.inactivedate,
                     createby = bank.createby,
+                    botcode = bank.botcode,
+                    swicfcode = bank.swicfcode,
                     createatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)
                 };
 
@@ -69,7 +71,9 @@ namespace BookingApp.Server.Services
                     active = @active,
                     inactivedate = @inactivedate,
                     updateby=@updateby, 
-                    updateatutc=@updateatutc
+                    updateatutc=@updateatutc,
+                    botcode =@botcode,
+                    swicfcode =@swicfcode
                 WHERE id = @id;";
                 if (bank.active == "Y")
                 {
@@ -85,6 +89,8 @@ namespace BookingApp.Server.Services
                     active = bank.active,
                     inactivedate = bank.inactivedate,
                     updateby = bank.updateby,
+                    botcode = bank.botcode,
+                    swicfcode = bank.swicfcode,
                     updateatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)
                 };
 
