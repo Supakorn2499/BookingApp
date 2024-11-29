@@ -22,17 +22,13 @@ namespace BookingApp.Server.Services
             {
                 const string query = @"
                 INSERT INTO bookbank (
-                    companyid, bankid, bankbranchid, acchartid, recivecqacchartid, 
-                    paymentcqacchartid, depositbookid, revertcqacchartid, trandferacchartid, code, 
-                    bookno, name1, name2, sname1, sname2, 
-                    bookbanktype, opendate, balanceamount, blancedate, active, 
+                    companyid, bankid, bankbranchid,code, 
+                    bookno, name1, name2,  opendate, balanceamount, blancedate, active, 
                     inactivedate, createby, createatutc
                 )
                 VALUES (
-                    @companyid, @bankid, @bankbranchid, @acchartid, @recivecqacchartid, 
-                    @paymentcqacchartid, @depositbookid, @revertcqacchartid, @trandferacchartid, @code, 
-                    @bookno, @name1, @name2, @sname1, @sname2, 
-                    @bookbanktype, @opendate, @balanceamount, @blancedate, @active, 
+                    @companyid, @bankid, @bankbranchid, @code, 
+                    @bookno, @name1, @name2, @opendate, @balanceamount, @blancedate, @active, 
                     @inactivedate, @createby, @createatutc
                 )
                 RETURNING id;";
@@ -46,19 +42,10 @@ namespace BookingApp.Server.Services
                     companyid = bank.companyid,
                     bankid = bank.bankid,
                     bankbranchid = bank.bankbranchid,
-                    acchartid = bank.acchartid,
-                    recivecqacchartid = bank.recivecqacchartid,
-                    paymentcqacchartid = bank.paymentcqacchartid,
-                    depositbookid = bank.depositbookid,
-                    revertcqacchartid = bank.revertcqacchartid,
-                    trandferacchartid = bank.trandferacchartid,
                     code = bank.code,
                     bookno = bank.bookno,
                     name1 = bank.name1,
                     name2 = bank.name2,
-                    sname1 = bank.sname1,
-                    sname2 = bank.sname2,
-                    bookbanktype = bank.bookbanktype,
                     opendate = bank.opendate,
                     balanceamount = bank.balanceamount,
                     blancedate = bank.blancedate,
@@ -92,19 +79,10 @@ namespace BookingApp.Server.Services
                     companyid = @companyid,
                     bankid = @bankid,
                     bankbranchid = @bankbranchid,
-                    acchartid = @acchartid,
-                    recivecqacchartid = @recivecqacchartid,
-                    paymentcqacchartid = @paymentcqacchartid,
-                    depositbookid = @depositbookid,
-                    revertcqacchartid = @revertcqacchartid,
-                    trandferacchartid = @trandferacchartid,
                     code = @code,
                     bookno = @bookno,
                     name1 = @name1,
                     name2 = @name2,
-                    sname1 = @sname1,
-                    sname2 = @sname2,
-                    bookbanktype = @bookbanktype,
                     opendate = @opendate,
                     balanceamount = @balanceamount,
                     blancedate = @blancedate,
@@ -123,19 +101,10 @@ namespace BookingApp.Server.Services
                     companyid = bank.companyid,
                     bankid = bank.bankid,
                     bankbranchid = bank.bankbranchid,
-                    acchartid = bank.acchartid,
-                    recivecqacchartid = bank.recivecqacchartid,
-                    paymentcqacchartid = bank.paymentcqacchartid,
-                    depositbookid = bank.depositbookid,
-                    revertcqacchartid = bank.revertcqacchartid,
-                    trandferacchartid = bank.trandferacchartid,
                     code = bank.code,
                     bookno = bank.bookno,
                     name1 = bank.name1,
                     name2 = bank.name2,
-                    sname1 = bank.sname1,
-                    sname2 = bank.sname2,
-                    bookbanktype = bank.bookbanktype,
                     opendate = bank.opendate,
                     balanceamount = bank.balanceamount,
                     blancedate = bank.blancedate,
@@ -155,13 +124,15 @@ namespace BookingApp.Server.Services
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
-            SELECT * 
-            FROM bookbank
+            SELECT a.*,b.name1 As bankname,bb.name1 as bankbranchname
+            FROM bookbank a 
+			INNER JOIN bank b on a.bankid=b.id 
+			INNER JOIN bankbranch bb on a.bankbranchid=bb.id
             WHERE (@Keyword IS NULL OR 
-                   LOWER(name1) LIKE LOWER(@Keyword) OR 
-                   LOWER(name2) LIKE LOWER(@Keyword) OR 
-                   LOWER(bookno) LIKE LOWER(@Keyword) OR 
-                   LOWER(code) LIKE LOWER(@Keyword))
+                   LOWER(a.name1) LIKE LOWER(@Keyword) OR 
+                   LOWER(a.name2) LIKE LOWER(@Keyword) OR 
+                   LOWER(a.bookno) LIKE LOWER(@Keyword) OR 
+                   LOWER(a.code) LIKE LOWER(@Keyword))
             ORDER BY id
             OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
 

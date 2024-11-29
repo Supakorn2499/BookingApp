@@ -21,6 +21,7 @@ const translations = {
       bank: "ธนาคาร",
       prodtype: "ประเภทสินค้า",
       bankbranch: "สาขาธานคาร",
+      bookbank: "สมุดบัญชี",
     },
     en: {
       dashboard: "Dashboard",
@@ -44,6 +45,7 @@ const translations = {
       bank: "Bank",
       prodtype: "Product Type",
       bankbranch: "Bank Branch",
+      bookbank: "Bookbank",
     },
   };
   

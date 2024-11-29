@@ -3,7 +3,7 @@ import AsyncSelect from "react-select/async";
 import api from "../pages/apiConfig";
 import { useOutletContext } from "react-router-dom";
 
-const BankBranchForm = ({ initialData, onSubmit, onCancel }) => {
+const BookBankForm = ({ initialData, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({
     id: 0,
     companyid: 1,
@@ -12,7 +12,9 @@ const BankBranchForm = ({ initialData, onSubmit, onCancel }) => {
     code: "",
     active: "Y",
     bankid: 1,
-    branch_no: "",
+    bankbranchid: 1,
+    bookno: "",
+    balanceamount: 0,
   });
   const { language } = useOutletContext();
   // แปลภาษา
@@ -28,6 +30,9 @@ const BankBranchForm = ({ initialData, onSubmit, onCancel }) => {
       active: "เปิดใช้งาน",
       inactive: "ปิดใช้งาน",
       bank: "ธนาคาร",
+      bankbranch: "สาขาธนาคาร",
+      bookno: "เลขที่บัญชี",
+      balanceamount: "จำนวนเงิน",
       status: "สถานะ",
     },
     en: {
@@ -40,6 +45,9 @@ const BankBranchForm = ({ initialData, onSubmit, onCancel }) => {
       active: "Active",
       inactive: "Inactive",
       bank: "Bank",
+      bankbranch: "Bank Branch",
+      bookno: "Account No",
+      balanceamount: "Amount",
       status: "Status",
     },
   };
@@ -84,15 +92,24 @@ const BankBranchForm = ({ initialData, onSubmit, onCancel }) => {
             ? await fetchOptionId("bank/GetById?id=", initialData.bankid)
             : null;
 
+          const bankbranchid = initialData.bankbranchid
+            ? await fetchOptionId(
+                "BankBranch/GetById?id=",
+                initialData.bankbranchid
+              )
+            : null;
+
           setFormData({
             id: initialData.id,
             code: initialData.code,
-            branch_no: initialData.code,
             companyid: 1,
             name1: initialData.name1,
             name2: initialData.name2,
             active: selectedStatus,
             bankid: bankid,
+            bankbranchid: bankbranchid,
+            bookno: initialData.bookno,
+            balanceamount: initialData.balanceamount,
           });
         } catch (error) {
           console.error("Error fetching default values:", error);
@@ -123,6 +140,7 @@ const BankBranchForm = ({ initialData, onSubmit, onCancel }) => {
     const outputData = {
       ...formData,
       bankid: formData.bankid?.value || null,
+      bankbranchid: formData.bankbranchid?.value || null,
     };
     onSubmit(outputData);
   };
@@ -168,6 +186,31 @@ const BankBranchForm = ({ initialData, onSubmit, onCancel }) => {
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
+
+      <div>
+        <label className="block p-1 text-sm font-medium text-gray-700">
+          {translation.name1}
+        </label>
+        <input
+          type="text"
+          name="name1"
+          value={formData.name1}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+      </div>
+      <div>
+        <label className="block p-1 text-sm font-medium text-gray-700">
+          {translation.name2}
+        </label>
+        <input
+          type="text"
+          name="name2"
+          value={formData.name2}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+      </div>
       {/* Dropdown สำหรับ bank */}
       <div>
         <label className="block p-1 text-sm font-medium text-gray-700">
@@ -184,32 +227,46 @@ const BankBranchForm = ({ initialData, onSubmit, onCancel }) => {
           }
         />
       </div>
+      {/* Dropdown สำหรับ bank branch */}
       <div>
         <label className="block p-1 text-sm font-medium text-gray-700">
-          {translation.name1}
+          {translation.bankbranch}
+        </label>
+        <AsyncSelect
+          placeholder={translation.select}
+          cacheOptions
+          loadOptions={(inputValue) => loadOptions("bankbranch", inputValue)}
+          defaultOptions
+          value={formData.bankbranchid}
+          onChange={(selectedOption) =>
+            handleSelectChange("bankbranchid", selectedOption)
+          }
+        />
+      </div>
+      <div>
+        <label className="block p-1 text-sm font-medium text-gray-700">
+          {translation.bookno}
         </label>
         <input
           type="text"
-          name="name1"
-          value={formData.name1}
+          name="bookno"
+          value={formData.bookno}
           onChange={handleChange}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
-
       <div>
         <label className="block p-1 text-sm font-medium text-gray-700">
-          {translation.name2}
+          {translation.balanceamount}
         </label>
         <input
-          type="text"
-          name="name2"
-          value={formData.name2}
+          type="number"
+          name="balanceamount"
+          value={formData.balanceamount}
           onChange={handleChange}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
       </div>
-
       {/* Dropdown สำหรับ Status */}
       <div>
         <label className="block p-1 text-sm font-medium text-gray-700">
@@ -248,4 +305,4 @@ const BankBranchForm = ({ initialData, onSubmit, onCancel }) => {
   );
 };
 
-export default BankBranchForm;
+export default BookBankForm;

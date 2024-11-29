@@ -14,6 +14,7 @@ import Paytype from "./pages/Paytype";
 import Bank from "./pages/Bank";
 import ProdType from "./pages/ProductType";
 import BankBranch from "./pages/BankBranch";
+import BookBank from "./pages/Bookbank";
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
                 <Route path="Bank" element={<Bank />} />
                 <Route path="ProdType" element={<ProdType />} />
                 <Route path="BankBranch" element={<BankBranch />} />
+                <Route path="BookBank" element={<BookBank />} />
               </Route>
             </Route>
           </Routes>
