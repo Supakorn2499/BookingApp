@@ -21,10 +21,10 @@ namespace BookingApp.Server.Services
                 const string query = @"
                 INSERT INTO saleman (companyid,code,card_no ,prefix_th ,
                 prefix_en ,nick_name , name1,name2, tel,mobile,email,commission,sale_team_id ,
-                start_work_date,status,active,inactivedate,createby, createatutc) 
+                start_work_date,status,active,inactivedate,createby, createatutc,position) 
                 VALUES (@companyid,@code,@card_no ,@prefix_th ,@prefix_en ,@nick_name , 
                 @name1,@name2, @tel,@mobile,@email,@commission,@sale_team_id ,@start_work_date, 
-                @status,@active,@inactivedate,@createby, @createatutc)
+                @status,@active,@inactivedate,@createby, @createatutc,@position)
                 RETURNING id;";
 
                 if (saleman.active == "Y")
@@ -52,6 +52,7 @@ namespace BookingApp.Server.Services
                     sale_team_id = saleman.sale_team_id,
                     status = saleman.status,
                     active = saleman.active,
+                    position = saleman.position,
                     inactivedate = saleman.inactivedate,
                     start_work_date = saleman.start_work_date,
                     createby = saleman.createby,
@@ -94,6 +95,7 @@ namespace BookingApp.Server.Services
                     sale_team_id=@sale_team_id ,
                     start_work_date=@start_work_date ,
                     active=@active,
+                    position=@position,
                     inactivedate=@inactivedate,
                     updateby=@updateby, 
                     updateatutc=@updateatutc
@@ -123,6 +125,7 @@ namespace BookingApp.Server.Services
                     commission = saleman.commission,
                     sale_team_id = saleman.sale_team_id,
                     active = saleman.active,
+                    position = saleman.position,
                     inactivedate = saleman.inactivedate,
                     start_work_date = saleman.start_work_date,
                     updateby = saleman.updateby,

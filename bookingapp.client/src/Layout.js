@@ -102,7 +102,7 @@ const App = () => {
       key: "company",
       name: t.company,
       href: "/company",
-      initial: "C",
+      initial: "CP",
       current: false,
     },
     {
@@ -110,7 +110,7 @@ const App = () => {
       key: "customer",
       name: t.customer,
       href: "/customer",
-      initial: "M",
+      initial: "CM",
       current: false,
     },
     {
@@ -118,7 +118,7 @@ const App = () => {
       key: "products",
       name: t.products,
       href: "/product",
-      initial: "P",
+      initial: "PD",
       current: false,
     },
     {
@@ -126,7 +126,7 @@ const App = () => {
       key: "productgroup",
       name: t.productgroup,
       href: "/productgroup",
-      initial: "G",
+      initial: "PG",
       current: false,
     },
     {
@@ -134,7 +134,7 @@ const App = () => {
       key: "prodtype",
       name: t.prodtype,
       href: "/prodtype",
-      initial: "T",
+      initial: "TT",
       current: false,
     },
     {
@@ -142,7 +142,7 @@ const App = () => {
       key: "vattype",
       name: t.vattype,
       href: "/vattype",
-      initial: "V",
+      initial: "VT",
       current: false,
     },
     {
@@ -174,7 +174,7 @@ const App = () => {
       key: "paytype",
       name: t.paytype,
       href: "/paytype",
-      initial: "P",
+      initial: "PT",
       current: false,
     },
     {

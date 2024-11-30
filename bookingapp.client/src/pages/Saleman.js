@@ -7,11 +7,11 @@ import {
 } from "@heroicons/react/20/solid";
 import { formatDateTime, formatNumber } from "./Utilitys";
 import { Link, useLocation } from "react-router-dom";
-import SaleTeamForm from "../components/SaleTeamForm.js";
+import SalemanForm from "../components/SalemanForm.js";
 import { useOutletContext } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const SaleTeam = () => {
+const Saleman = () => {
   const [data, setDatas] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
@@ -27,13 +27,17 @@ const SaleTeam = () => {
   // แปลภาษา
   const translations = {
     th: {
-      title: "ข้อมูลทีมขาย",
+      title: "พนักงานขาย",
       navbar: "ทีมขาย",
       keyword: "ค้นหาด้วยรหัส/ชื่อ",
       create: "เพิ่มใหม่",
       code: "รหัส",
       name1: "ชื่อไทย",
       name2: "ชื่ออังกฤษ",
+      mobile: "เบอร์โทร",
+      email: "อีเมล",
+      position: "ตำแหน่ง",
+      commission: "คอมมิชั่น",
       status: "สถานะ",
       createdate: "วันที่สร้าง",
       createby: "สร้างโดย",
@@ -64,7 +68,7 @@ const SaleTeam = () => {
       swal_button_cancel: "ยกเลิก",
     },
     en: {
-      title: "SaleTeam",
+      title: "Saleman",
       navbar: "SaleTeam",
       keyword: "Code/Name",
       create: "Add New",
@@ -72,6 +76,10 @@ const SaleTeam = () => {
       name1: "Name (Thail)",
       name2: "Name (English)",
       status: "Status",
+      mobile: "Mobile",
+      email: "Email",
+      position: "Position",
+      commission: "Commission",
       createdate: "Create Date",
       createby: "Create by",
       delete: "Delete",
@@ -117,7 +125,7 @@ const SaleTeam = () => {
     setIsLoading(true);
     setErrorMessage("");
     try {
-      const { data } = await api.get("/SaleTeam/Search", {
+      const { data } = await api.get("/Saleman/Search", {
         params: {
           pageNumber: pageNumber,
           pageSize: ITEMS_PER_PAGE,
@@ -156,11 +164,11 @@ const SaleTeam = () => {
   };
 
   //เพิ่มข้อมูลใหม่
-  const handleCreate  = async (formData) => {
+  const handleCreate = async (formData) => {
     console.log(JSON.stringify(formData));
     try {
       const response = await api.post(
-        "/SaleTeam/Create",
+        "/Saleman/Create",
         JSON.stringify(formData),
         { headers: { "Content-Type": "application/json" } }
       );
@@ -186,11 +194,11 @@ const SaleTeam = () => {
   };
 
   // แก้ไขข้อมูล
-  const handleEdit  = async (formData) => {
+  const handleEdit = async (formData) => {
     try {
       //console.log(JSON.stringify(formData));
       const response = await api.put(
-        "/SaleTeam/Update?id=" + formData.id,
+        "/Saleman/Update?id=" + formData.id,
         JSON.stringify(formData),
         { headers: { "Content-Type": "application/json" } }
       );
@@ -218,7 +226,7 @@ const SaleTeam = () => {
   // ลบข้อมูลออกจากระบบ
   const handleDelete = async () => {
     try {
-      await api.delete(`/SaleTeam/Delete/?id=${deleteId}`);
+      await api.delete(`/Saleman/Delete/?id=${deleteId}`);
       setDatas((prev) => prev.filter((data) => data.id !== deleteId));
     } catch (error) {
       console.error("Error deleting data:", error);
@@ -346,6 +354,18 @@ const SaleTeam = () => {
                   {translation.name2}
                 </th>
                 <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
+                  {translation.position}
+                </th>
+                <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
+                  {translation.mobile}
+                </th>
+                <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
+                  {translation.email}
+                </th>
+                <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
+                  {translation.commission}
+                </th>
+                <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
                   {translation.active}
                 </th>
 
@@ -383,7 +403,18 @@ const SaleTeam = () => {
                 <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
                   {translation.name2}
                 </th>
-
+                <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
+                  {translation.position}
+                </th>
+                <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
+                  {translation.mobile}
+                </th>
+                <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
+                  {translation.email}
+                </th>
+                <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
+                  {translation.commission}
+                </th>
                 <th className="px-4 py-1 text-center text-sm font-semibold text-gray-900">
                   {translation.active}
                 </th>
@@ -397,28 +428,37 @@ const SaleTeam = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
-              { data.map((d) => (
+              {data.map((d) => (
                 <tr key={d.id} className="divide-x divide-gray-200">
                   <td className="whitespace-nowrap p-1 text-sm font-medium text-gray-900 ">
                     {d.code}
                   </td>
                   <td className="whitespace-nowrap p-1 text-sm text-gray-600">
-                    { d.name1}
+                    {d.prefix_th +' '+ d.name1}
                   </td>
                   <td className="whitespace-nowrap p-1 text-sm text-gray-600">
-                    { d.name2}
+                    {d.prefix_en +' '+ d.name2}
+                  </td>
+                  <td className="whitespace-nowrap p-1 text-sm text-gray-600">
+                    {d.position}
+                  </td>
+                  <td className="whitespace-nowrap p-1 text-sm text-gray-600">
+                    {d.mobile}
+                  </td>
+                  <td className="whitespace-nowrap p-1 text-sm text-gray-600">
+                    {d.email}
+                  </td>
+                  <td className="whitespace-nowrap p-1 text-sm text-right text-gray-600">
+                    {formatNumber(d.commission)}
                   </td>
                   <td className="whitespace-nowrap p-1 text-sm text-center text-gray-600">
-                    { d.active === "Y" ? "Active" : "Inactive"}
+                    {d.active === "Y" ? "Active" : "Inactive"}
                   </td>
                   <td className="whitespace-nowrap p-1 text-sm text-center text-gray-600">
                     <button
                       className="text-red-500 font-semibold"
                       onClick={() =>
-                        confirmDelete(
-                           d.id,
-                           d.code + " : " +  d.name1
-                        )
+                        confirmDelete(d.id, d.code + " : " + d.name1)
                       }
                     >
                       <span>{translation.delete}</span>
@@ -430,12 +470,19 @@ const SaleTeam = () => {
                       onClick={() => {
                         setFormMode("edit");
                         setFormData({
-                          id:  d.id,
+                          id: d.id,
                           companyid: 1,
-                          name1:  d.name1,
-                          name2:  d.name2,
+                          prefix_th: d.prefix_th,
+                          prefix_en: d.prefix_en,
+                          name1: d.name1,
+                          name2: d.name2,
                           code: d.code,
-                          active: d.active
+                          position: d.position,
+                          mobile: d.mobile,
+                          email: d.email,
+                          commission: d.commission,
+                          active: d.active,
+                          sale_team_id: d.sale_team_id,
                         });
                         setFormVisible(true);
                       }}
@@ -524,14 +571,14 @@ const SaleTeam = () => {
                 : translation.popupformtitle_update}
             </h2>
             {formMode === "add" ? (
-              <SaleTeamForm
+              <SalemanForm
                 initialData={null}
                 onSubmit={handleCreate}
                 onCancel={handleClosForm}
                 language
               />
             ) : (
-              <SaleTeamForm
+              <SalemanForm
                 initialData={formData}
                 onSubmit={handleEdit}
                 onCancel={handleClosForm}
@@ -545,4 +592,4 @@ const SaleTeam = () => {
   );
 };
 
-export default SaleTeam;
+export default Saleman;
