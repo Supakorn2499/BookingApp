@@ -485,7 +485,7 @@ const RentalSpace = () => {
                     <button
                       className="text-red-500 font-semibold"
                       onClick={() =>
-                        confirmDelete(d.id, d.code + " : " + d.name1)
+                        confirmDelete(d.id, d.room_name)
                       }
                     >
                       <span>{translation.delete}</span>

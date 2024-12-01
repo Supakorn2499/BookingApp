@@ -261,7 +261,7 @@ const Floor = () => {
           <li>
             <div className="flex">
               <Link
-                to="/Floor"
+                to="/rentalspace"
                 className="text-sm font-medium text-gray-500 hover:text-gray-700"
               >
                 {translation.navbar}

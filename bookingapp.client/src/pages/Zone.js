@@ -261,7 +261,7 @@ const Zone = () => {
           <li>
             <div className="flex">
               <Link
-                to="/Zone"
+                to="/rentalspace"
                 className="text-sm font-medium text-gray-500 hover:text-gray-700"
               >
                 {translation.navbar}
