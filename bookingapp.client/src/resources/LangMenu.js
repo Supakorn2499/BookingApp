@@ -24,6 +24,12 @@ const translations = {
       bookbank: "สมุดบัญชี",
       saleteam: "ทีมขาย",
       saleman: "พนักงานขาย",
+      zone:"โซน",
+      building: "อาคาร",
+      floor: "ชั้น",
+      rentaltype: "ประเภทเช่า",
+      rentalspace: "พื้นที่เช่า"
+
     },
     en: {
       dashboard: "Dashboard",
@@ -50,6 +56,11 @@ const translations = {
       bookbank: "Bookbank",
       saleteam: "Sale Team",
       saleman: "Saleman",
+      zone:"Zone",
+      building: "Building",
+      floor: "Floor",
+      rentaltype: "Rental Type",
+      rentalspace: "Rental Space"
     },
   };
   

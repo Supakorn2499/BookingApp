@@ -138,17 +138,37 @@ namespace BookingApp.Server.Services
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
-            SELECT * 
-            FROM rental_space
+            select a.*
+            ,b.name1 As rental_type_name
+            ,c.name1 as floor_name
+            ,d.name1 as building_name
+            ,e.name1 as zone_name
+            from rental_space  a
+             inner join rental_type b  on a.rental_type_id =b.id
+             inner join floor c on a.floor_id=c.id
+             inner join building d on a.building_id=d.id
+             inner join zone e on a.zone_id=e.id
             WHERE (@Keyword IS NULL OR 
-                   LOWER(room_name) LIKE LOWER(@Keyword))
+                   LOWER(room_name) LIKE LOWER(@Keyword) OR
+                   LOWER(b.name1) LIKE LOWER(@Keyword) OR
+                   LOWER(c.name1) LIKE LOWER(@Keyword) OR
+                   LOWER(d.name1) LIKE LOWER(@Keyword) OR
+                   LOWER(e.name1) LIKE LOWER(@Keyword))
             ORDER BY id
             OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
 
             SELECT COUNT(*)
-            FROM rental_space
+            from rental_space  a
+             inner join rental_type b  on a.rental_type_id =b.id
+             inner join floor c on a.floor_id=c.id
+             inner join building d on a.building_id=d.id
+             inner join zone e on a.zone_id=e.id
             WHERE (@Keyword IS NULL OR 
-                   LOWER(room_name) LIKE LOWER(@Keyword));";
+                   LOWER(room_name) LIKE LOWER(@Keyword) OR
+                   LOWER(b.name1) LIKE LOWER(@Keyword) OR
+                   LOWER(c.name1) LIKE LOWER(@Keyword) OR
+                   LOWER(d.name1) LIKE LOWER(@Keyword) OR
+                   LOWER(e.name1) LIKE LOWER(@Keyword));";
 
                 var offset = (pageNumber - 1) * pageSize;
 

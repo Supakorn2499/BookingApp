@@ -17,7 +17,11 @@ import BankBranch from "./pages/BankBranch";
 import BookBank from "./pages/Bookbank";
 import SaleTeam from "./pages/SaleTeam";
 import Saleman from "./pages/Saleman";
-
+import Zone from "./pages/Zone";
+import Floor from "./pages/Floor";
+import Building from "./pages/Building";
+import RentalType from "./pages/RentalType"
+import RentalSpace from "./pages/RentalSpace"
 
 export default function App() {
   return (
@@ -41,6 +45,11 @@ export default function App() {
                 <Route path="BookBank" element={<BookBank />} />
                 <Route path="SaleTeam" element={<SaleTeam />} />
                 <Route path="Saleman" element={<Saleman />} />
+                <Route path="Zone" element={<Zone />} />
+                <Route path="Floor" element={<Floor />} />
+                <Route path="Building" element={<Building />} />
+                <Route path="RentalType" element={<RentalType />} />
+                <Route path="RentalSpace" element={<RentalSpace />} />
               </Route>
             </Route>
           </Routes>
