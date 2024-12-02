@@ -6,7 +6,11 @@ import {
   DialogBackdrop,
   DialogPanel,
   TransitionChild,
+  DisclosureButton,
+  DisclosurePanel,
+  Disclosure,
 } from "@headlessui/react";
+import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import {
   Bars3Icon,
   CalendarIcon,
@@ -96,13 +100,13 @@ const App = () => {
       current: false,
     },
   ];
-  const teams = [
+  const databases = [
     {
       id: 1,
       key: "company",
       name: t.company,
       href: "/company",
-      initial: "CP",
+      initial: "C",
       current: false,
     },
     {
@@ -110,127 +114,165 @@ const App = () => {
       key: "customer",
       name: t.customer,
       href: "/customer",
-      initial: "CM",
+      initial: "M",
       current: false,
     },
     {
       id: 3,
       key: "products",
       name: t.products,
-      href: "/product",
       initial: "P",
       current: false,
+      children: [
+        {
+          id: 31,
+          key: "products",
+          name: t.products,
+          href: "/product",
+          initial: "P",
+          current: false,
+        },
+        {
+          id: 32,
+          key: "productgroup",
+          name: t.productgroup,
+          href: "/productgroup",
+          initial: "PG",
+          current: false,
+        },
+        {
+          id: 33,
+          key: "prodtype",
+          name: t.prodtype,
+          href: "/prodtype",
+          initial: "PT",
+          current: false,
+        },
+        {
+          id: 34,
+          key: "vattype",
+          name: t.vattype,
+          href: "/vattype",
+          initial: "PV",
+          current: false,
+        },
+      ],
     },
     {
       id: 4,
-      key: "productgroup",
-      name: t.productgroup,
-      href: "/productgroup",
-      initial: "PG",
+      key: "bank",
+      name: t.bank,
+      initial: "B",
       current: false,
+      children: [
+        {
+          id: 41,
+          key: "bank",
+          name: t.bank,
+          href: "/bank",
+          initial: "B",
+          current: false,
+        },
+        {
+          id: 42,
+          key: "bankbranch",
+          name: t.bankbranch,
+          href: "/bankbranch",
+          initial: "BH",
+          current: false,
+        },
+        {
+          id: 43,
+          key: "bookbank",
+          name: t.bookbank,
+          href: "/bookbank",
+          initial: "BB",
+          current: false,
+        },
+        {
+          id: 44,
+          key: "paytype",
+          name: t.paytype,
+          href: "/paytype",
+          initial: "BT",
+          current: false,
+        },
+      ],
     },
+
     {
       id: 5,
-      key: "prodtype",
-      name: t.prodtype,
-      href: "/prodtype",
-      initial: "PT",
+      key: "saleteam",
+      name: t.saleteam,
+      initial: "T",
       current: false,
+      children: [
+        {
+          id: 51,
+          key: "saleteam",
+          name: t.saleteam,
+          href: "/saleteam",
+          initial: "S",
+          current: false,
+        },
+        {
+          id: 52,
+          key: "saleman",
+          name: t.saleman,
+          href: "/saleman",
+          initial: "SM",
+          current: false,
+        },
+      ],
     },
     {
       id: 6,
-      key: "vattype",
-      name: t.vattype,
-      href: "/vattype",
-      initial: "PV",
-      current: false,
-    },
-    {
-      id: 7,
-      key: "bank",
-      name: t.bank,
-      href: "/bank",
-      initial: "B",
-      current: false,
-    },
-    {
-      id: 8,
-      key: "bankbranch",
-      name: t.bankbranch,
-      href: "/bankbranch",
-      initial: "BH",
-      current: false,
-    },
-    {
-      id: 9,
-      key: "bookbank",
-      name: t.bookbank,
-      href: "/bookbank",
-      initial: "BB",
-      current: false,
-    },
-    {
-      id: 10,
-      key: "paytype",
-      name: t.paytype,
-      href: "/paytype",
-      initial: "ฺBT",
-      current: false,
-    },
-    {
-      id: 11,
-      key: "saleteam",
-      name: t.saleteam,
-      href: "/saleteam",
-      initial: "S",
-      current: false,
-    },
-    {
-      id: 12,
-      key: "saleman",
-      name: t.saleman,
-      href: "/saleman",
-      initial: "SM",
-      current: false,
-    },{
-      id: 13,
       key: "rentalspace",
       name: t.rentalspace,
-      href: "/rentalspace",
       initial: "R",
       current: false,
-    },
-    {
-      id: 14,
-      key: "rentaltype",
-      name: t.rentaltype,
-      href: "/rentaltype",
-      initial: "RT",
-      current: false,
-    },
-    {
-      id: 15,
-      key: "building",
-      name: t.building,
-      href: "/building",
-      initial: "RB",
-      current: false,
-    },
-    {
-      id: 16,
-      key: "floor",
-      name: t.floor,
-      href: "/floor",
-      initial: "RF",
-      current: false,
-    },
-    {
-      id: 17,
-      key: "zone",
-      name: t.zone,
-      href: "/zone",
-      initial: "RZ",
-      current: false,
+      children: [
+        {
+          id: 61,
+          key: "rentalspace",
+          name: t.rentalspace,
+          href: "/rentalspace",
+          initial: "R",
+          current: false,
+        },
+        {
+          id: 62,
+          key: "rentaltype",
+          name: t.rentaltype,
+          href: "/rentaltype",
+          initial: "RT",
+          current: false,
+        },
+        {
+          id: 63,
+          key: "building",
+          name: t.building,
+          href: "/building",
+          initial: "RB",
+          current: false,
+        },
+        {
+          id: 64,
+          key: "floor",
+          name: t.floor,
+          href: "/floor",
+          initial: "RF",
+          current: false,
+        },
+        {
+          id: 65,
+          key: "zone",
+          name: t.zone,
+          href: "/zone",
+          initial: "RZ",
+          current: false,
+        },
+      ],
     },
   ];
   const handleLogout = async (e) => {
@@ -310,25 +352,120 @@ const App = () => {
                       {t.database}
                     </div>
                     <ul role="list" className="-mx-2 mt-2 space-y-1">
-                      {teams.map((team) => (
-                        <li key={team.key}>
-                          <Link
-                            href={team.href}
-                            className={classNames(
-                              team.current
-                                ? "bg-indigo-700 text-white"
-                                : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
-                              "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
-                            )}
-                          >
-                            <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
-                              {team.initial}
-                            </span>
-                            <span className="truncate">{team.name}</span>
-                          </Link>
+                      {databases.map((item) => (
+                        <li key={item.key}>
+                          {!item.children ? (
+                            <Link
+                              to={item.href}
+                              className={classNames(
+                                location.pathname === item.href
+                                  ? "bg-indigo-700 text-white"
+                                  : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
+                                "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
+                              )}
+                            >
+                              <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
+                                {item.initial}
+                              </span>
+                              <span className="truncate">{item.name}</span>
+                            </Link>
+                          ) : (
+                            <Disclosure as="div">
+                              <DisclosureButton
+                                className={classNames(
+                                  location.pathname === item.href
+                                    ? "bg-indigo-700 text-white"
+                                    : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
+                                  "group flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm/6 font-semibold text-gray-700"
+                                )}
+                              >
+                                <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
+                                  {item.initial}
+                                </span>
+                                <span className="truncate">{item.name}</span>
+                                <ChevronRightIcon
+                                  aria-hidden="true"
+                                  className="ml-auto size-5 shrink-0 text-white group-data-[open]:rotate-90 group-data-[open]:text-white"
+                                />
+                              </DisclosureButton>
+                              <DisclosurePanel as="ul" className="mt-1 px-2">
+                                {item.children.map((subItem) => (
+                                  <li key={subItem.name}>
+                                    {/* 44px */}
+                                    <Link
+                                      to={subItem.href}
+                                      className={classNames(
+                                        location.pathname === subItem.href
+                                          ? "bg-indigo-700 text-white"
+                                          : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
+                                        "block rounded-md py-2 pl-9 pr-2 text-sm/6 text-gray-700"
+                                      )}
+                                    >
+                                      {subItem.name}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </DisclosurePanel>
+                            </Disclosure>
+                          )}
                         </li>
                       ))}
                     </ul>
+                  </li>
+                  <li className="-mx-6 mt-auto">
+                    <div
+                      href="#"
+                      className="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-white hover:bg-indigo-700 justify-between"
+                    >
+                      <img
+                        alt=""
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        className="size-8 rounded-full bg-indigo-700"
+                      />
+                      <span className="sr-only">Your profile</span>
+                      <span aria-hidden="true">ศุภกร อ้นวิเชียร</span>
+
+                      <Menu
+                        as="div"
+                        className="relative inline-block text-left"
+                      >
+                        <div>
+                          <MenuButton className="flex items-center rounded-full bg-gray-100 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
+                            <span className="sr-only">Open options</span>
+                            <EllipsisVerticalIcon
+                              aria-hidden="true"
+                              className="size-5"
+                            />
+                          </MenuButton>
+                        </div>
+
+                        <MenuItems
+                          transition
+                          className="absolute bottom-7 right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                        >
+                          <div className="py-1">
+                            <MenuItem>
+                              <button
+                                onClick={toggleLanguage}
+                                className="block w-full px-4 py-2 text-sm text-left text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                              >
+                                {language === "en"
+                                  ? "เปลี่ยนภาษา : ไทย"
+                                  : "Switch language : English"}
+                              </button>
+                            </MenuItem>
+                            <MenuItem>
+                              <button
+                                onClick={handleLogout}
+                                className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
+                              >
+                                {t.signout_button}
+                              </button>
+                            </MenuItem>
+                          </div>
+                        </MenuItems>
+                      </Menu>
+                    </div>
                   </li>
                 </ul>
               </nav>
@@ -383,22 +520,62 @@ const App = () => {
                   {t.database}
                 </div>
                 <ul role="list" className="-mx-2 mt-2 space-y-1">
-                  {teams.map((team) => (
-                    <li key={team.key}>
-                      <Link
-                        to={team.href}
-                        className={classNames(
-                          location.pathname === team.href
-                            ? "bg-indigo-700 text-white"
-                            : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
-                          "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
-                        )}
-                      >
-                        <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
-                          {team.initial}
-                        </span>
-                        <span className="truncate">{team.name}</span>
-                      </Link>
+                  {databases.map((item) => (
+                    <li key={item.key}>
+                      {!item.children ? (
+                        <Link
+                          to={item.href}
+                          className={classNames(
+                            location.pathname === item.href
+                              ? "bg-indigo-700 text-white"
+                              : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
+                            "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
+                          )}
+                        >
+                          <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
+                            {item.initial}
+                          </span>
+                          <span className="truncate">{item.name}</span>
+                        </Link>
+                      ) : (
+                        <Disclosure as="div">
+                          <DisclosureButton
+                            className={classNames(
+                              location.pathname === item.href
+                                ? "bg-indigo-700 text-white"
+                                : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
+                              "group flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm/6 font-semibold text-gray-700"
+                            )}
+                          >
+                            <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
+                              {item.initial}
+                            </span>
+                            <span className="truncate">{item.name}</span>
+                            <ChevronRightIcon
+                              aria-hidden="true"
+                              className="ml-auto size-5 shrink-0 text-white group-data-[open]:rotate-90 group-data-[open]:text-white"
+                            />
+                          </DisclosureButton>
+                          <DisclosurePanel as="ul" className="mt-2 px-2">
+                            {item.children.map((subItem) => (
+                              <li key={subItem.name}>
+                                {/* 44px */}
+                                <Link
+                                  to={subItem.href}
+                                  className={classNames(
+                                    location.pathname === subItem.href
+                                      ? "bg-indigo-700 text-white"
+                                      : "text-indigo-200 hover:bg-indigo-700 hover:text-white",
+                                    "block mt-1 rounded-md py-2 pl-9 pr-2 text-sm/6 text-gray-700"
+                                  )}
+                                >
+                                  {subItem.name}
+                                </Link>
+                              </li>
+                            ))}
+                          </DisclosurePanel>
+                        </Disclosure>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -469,17 +646,6 @@ const App = () => {
           <span className="sr-only">Open sidebar</span>
           <Bars3Icon aria-hidden="true" className="size-6" />
         </button>
-        <div className="flex-1 text-sm/6 font-semibold text-white">
-          {t.dashboard}
-        </div>
-        <a href="#">
-          <span className="sr-only">Your profile</span>
-          <img
-            alt=""
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            className="size-8 rounded-full bg-indigo-700"
-          />
-        </a>
       </div>
 
       <main className="py-10 lg:pl-72">

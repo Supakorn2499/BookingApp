@@ -332,7 +332,7 @@ const Zone = () => {
       ) : errorMessage ? (
         <p className="text-center text-red-500">{errorMessage}</p>
       ) : data.length === 0 ? (
-        <div className="mt-2 ring-1 ring-gray-300 sm:mx-0 sm:rounded-sm">
+        <div className="mt-2 ring-1 ring-gray-300 sm:mx-0 sm:rounded-sm overflow-x-auto">
           <table className="min-w-full divide-y  divide-gray-300">
             <thead>
               <tr className="divide-x divide-gray-200">
@@ -370,7 +370,7 @@ const Zone = () => {
           </table>
         </div>
       ) : (
-        <div className="min-w-full mt-2 ring-1 ring-gray-300 sm:mx-0 sm:rounded-sm">
+        <div className="min-w-full mt-2 ring-1 ring-gray-300 sm:mx-0 sm:rounded-sm overflow-x-auto">
           <table className="min-w-full divide-y  divide-gray-300">
             <thead>
               <tr className="divide-x divide-gray-200">

@@ -246,6 +246,7 @@ const Product = () => {
     setPopupVisible(true);
   };
 
+
   return (
     <div>
       <nav aria-label="Back" className="sm:hidden">
@@ -336,7 +337,7 @@ const Product = () => {
       ) : errorMessage ? (
         <p className="text-center text-red-500">{errorMessage}</p>
       ) : products.length === 0 ? (
-        <div className="mt-2 ring-1 ring-gray-300 sm:mx-0 sm:rounded-sm">
+        <div className="mt-2 ring-1 ring-gray-300 overflow-x-auto sm:mx-0 sm:rounded-sm">
           <table className="min-w-full divide-y  divide-gray-300">
             <thead>
               <tr className="divide-x divide-gray-200">
@@ -380,7 +381,7 @@ const Product = () => {
           </table>
         </div>
       ) : (
-        <div className="min-w-full mt-2 ring-1 ring-gray-300 sm:mx-0 sm:rounded-sm">
+        <div className="min-w-full mt-2 ring-1 ring-gray-300 sm:mx-0 sm:rounded-sm overflow-x-auto">
           <table className="min-w-full divide-y  divide-gray-300">
             <thead>
               <tr className="divide-x divide-gray-200">
@@ -462,7 +463,7 @@ const Product = () => {
                           saleprice: product.saleprice,
                           unitname: product.unitname,
                           remark: product.remark,
-                          active: product.active
+                          active: product.active,
                         });
                         setFormVisible(true);
                       }}
@@ -518,7 +519,9 @@ const Product = () => {
       {popupVisible && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">{translation.confirmtitle}</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              {translation.confirmtitle}
+            </h2>
             <p>
               {translation.confirm_msg} {deleteName} ?
             </p>
