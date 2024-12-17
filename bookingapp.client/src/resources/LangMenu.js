@@ -28,7 +28,9 @@ const translations = {
       building: "อาคาร",
       floor: "ชั้น",
       rentaltype: "ประเภทเช่า",
-      rentalspace: "พื้นที่เช่า"
+      rentalspace: "พื้นที่เช่า",
+      meter: "มิตเตอร์",
+      metertype: "ประเภทมิตเตอร์",
 
     },
     en: {
@@ -60,7 +62,9 @@ const translations = {
       building: "Building",
       floor: "Floor",
       rentaltype: "Rental Type",
-      rentalspace: "Rental Space"
+      rentalspace: "Rental Space",
+      meter: "Meter",
+      metertype: "Meter Type",
     },
   };
   

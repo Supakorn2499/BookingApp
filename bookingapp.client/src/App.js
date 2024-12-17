@@ -22,6 +22,7 @@ import Floor from "./pages/Floor";
 import Building from "./pages/Building";
 import RentalType from "./pages/RentalType"
 import RentalSpace from "./pages/RentalSpace"
+import Metertype from "./pages/Metertype"
 
 export default function App() {
   return (
@@ -50,6 +51,7 @@ export default function App() {
                 <Route path="Building" element={<Building />} />
                 <Route path="RentalType" element={<RentalType />} />
                 <Route path="RentalSpace" element={<RentalSpace />} />
+                <Route path="Metertype" element={<Metertype />} />
               </Route>
             </Route>
           </Routes>
