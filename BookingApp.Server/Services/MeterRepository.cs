@@ -18,8 +18,8 @@ namespace BookingApp.Server.Services
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 const string query = @"
-                INSERT INTO meter (code, name1,name2, active,price_per_unit,inactivedate,createby, createatutc) 
-                VALUES (@code, @name1,@name2, @active,@price_per_unit,@inactivedate,@createby, @createatutc)
+                INSERT INTO meter (meter_type_id, meter_number,meter_value, status,active,inactivedate,createby, createatutc) 
+                VALUES (@meter_type_id, @meter_number,@meter_value, @status,@active,@inactivedate,@createby, @createatutc)
                 RETURNING id;";
 
                 if (meter.active == "Y")
@@ -28,11 +28,11 @@ namespace BookingApp.Server.Services
                 }
                 var paraments = new
                 {
-                    code = meter.code,
-                    name1 = meter.name1,
-                    name2 = meter.name2,
+                    meter_type_id = meter.meter_type_id,
+                    meter_number = meter.meter_number,
+                    meter_value = meter.meter_value,
                     active = meter.active,
-                    price_per_unit = meter.price_per_unit,
+                    status = meter.status,
                     inactivedate = meter.inactivedate,
                     createby = meter.createby,
                     createatutc = DateTimeHelper.ConvertToUtc(DateTime.Now)
@@ -59,10 +59,11 @@ namespace BookingApp.Server.Services
                 const string query = @"
                 UPDATE meter 
                 SET 
-                    code= @code,
-                    name1 = @name1,
-                    name2 = @name2,
+                    meter_type_id= @meter_type_id,
+                    meter_number = @meter_number,
+                    meter_value = @meter_value,
                     active = @active,
+                    status = @status,
                     inactivedate = @inactivedate,
                     updateby=@updateby, 
                     updateatutc=@updateatutc
@@ -74,7 +75,7 @@ namespace BookingApp.Server.Services
                 var paraments = new
                 {
                     id = meter.id,
-                    code = meter.code,
+                    meter_type_id = meter.meter_type_id,
                     name1 = meter.name1,
                     name2 = meter.name2,
                     active = meter.active,
